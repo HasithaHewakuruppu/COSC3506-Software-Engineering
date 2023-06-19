@@ -9,9 +9,7 @@
   `npx prisma studio` in the terminal
 */
 
-const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient();
+import { prisma } from "../server/db";
 
 const randomId = (len) => Math.random().toString(16).slice(len);
 
