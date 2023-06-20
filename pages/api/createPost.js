@@ -6,7 +6,7 @@
 
   1. Use a brower to navigate to http://localhost:3000/api/createPost
   2. Check to see if a new record is created in the database by typing
-  `npx prisma studio` in the terminal
+  `npm run studio` in the terminal
 */
 
 import { prisma } from "../server/db";
