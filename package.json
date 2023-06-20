@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.15.0",
+    "dotenv": "^16.3.1",
     "next": "latest",
     "next-auth": "^4.22.1",
     "plotly.js": "^2.24.2",
