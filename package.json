@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "dotenv -e .env.local -- node ./utils/env.mjs && next dev",
     "build": "next build",
     "start": "next start",
     "studio": "dotenv -e .env.local -- npx prisma studio"
