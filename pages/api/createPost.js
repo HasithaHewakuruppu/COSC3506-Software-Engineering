@@ -9,8 +9,11 @@
   `npm run studio` in the terminal
 */
 
-import { prisma } from "../server/db";
+// sample for how to access env variable
+import { env } from "../../utils/env.mjs";
+const dbUrl = env.DATABASE_URL;
 
+import { prisma } from "../server/db";
 const randomId = (len) => Math.random().toString(16).slice(len);
 
 export default async function createPost(req, res) {
