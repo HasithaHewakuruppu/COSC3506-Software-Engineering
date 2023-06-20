@@ -6,11 +6,14 @@
 
   1. Use a brower to navigate to http://localhost:3000/api/createPost
   2. Check to see if a new record is created in the database by typing
-  `npx prisma studio` in the terminal
+  `npm run studio` in the terminal
 */
 
-import { prisma } from "../server/db";
+// sample for how to access env variable
+import { env } from "../../utils/env.mjs";
+const dbUrl = env.DATABASE_URL;
 
+import { prisma } from "../server/db";
 const randomId = (len) => Math.random().toString(16).slice(len);
 
 export default async function createPost(req, res) {
