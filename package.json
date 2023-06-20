@@ -10,8 +10,10 @@
     "@prisma/client": "^4.15.0",
     "next": "latest",
     "next-auth": "^4.22.1",
+    "plotly.js": "^2.24.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-plotly.js": "^2.6.0"
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",
