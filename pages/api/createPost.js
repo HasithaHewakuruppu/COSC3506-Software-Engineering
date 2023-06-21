@@ -13,7 +13,7 @@
 import { env } from "../../utils/env.mjs";
 const dbUrl = env.DATABASE_URL;
 
-import { prisma } from "../server/db";
+import { prisma } from "../../lib/db";
 const randomId = (len) => Math.random().toString(16).slice(len);
 
 export default async function createPost(req, res) {
