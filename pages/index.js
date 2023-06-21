@@ -28,57 +28,24 @@ export default function HomePage() {
         </div>
         <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
           <form>
-            <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
-              <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-
-              <button type="button" className={`btn btn-primary btn-floating mx-1 ${styles.socialMediaLogin}`} title="Google" onClick={handleGoogleAuth}>
-                <i class="fab fa-google"></i>
-              </button>
-
-              <button type="button" className={`btn btn-primary btn-floating mx-1 ${styles.socialMediaLogin}`} title="Discord" onClick={handleDiscordAuth}>
-                <i class="fab fa-discord"></i>
-              </button>
-
-              <button type="button" className={`btn btn-primary btn-floating mx-1 ${styles.socialMediaLogin}`} title="GitHub" onClick={handleGitHubAuth}>
-                <i class="fab fa-github"></i>
-              </button>
-
-            </div>
-
-            <div className={`${styles.divider} d-flex align-items-center my-4`}>
-              <p class="text-center fw-bold mx-3 mb-0">Or</p>
-            </div>
-
         
-            <div class="form-outline mb-4">
-              <input type="email" id="form3Example3" class="form-control form-control-lg"
-                placeholder="Email address" />
+            <h2 className={`${styles.signinStyles} lead fw-bold mb-0 me-3`}>Sign in</h2>
+        
+            <div className={`${styles.divider} d-flex align-items-center my-4 `}>
+              <p class="text-center fw-bold mx-3 mb-0 ">with</p>
             </div>
-
-          
-            <div class="form-outline mb-3">
-              <input type="password" id="form3Example4" class="form-control form-control-lg"
-                placeholder="Password" />
-            </div>
-
-            <div class="d-flex justify-content-between align-items-center">
             
-              <div class="form-check mb-0">
-                <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
-                <label class="form-check-label">
-                  Remember me
-                </label>
-              </div>
-              <a href="#!" className={`text-body ${styles.noUnderline}`} >Forgot password?</a>
-            </div>
+                <button type="button" className={`${styles.socialLogin} ${styles.google} btn btn-primary btn-lg form-control form-control-lg`} onClick={handleGoogleAuth}>
+                    <i class="fab fa-google me-2"></i>&nbsp;&nbsp;Google
+                </button>
 
-            <div class="text-center text-lg-start mt-4 pt-2">
-            <button type="button" className={`${styles.login} btn btn-primary btn-lg`}>
-              Login
-            </button>
-            <p className="small fw-bold mt-2 pt-1 mb-0">Don't have an account?&nbsp;&nbsp;
-            <a href="#!" className={`link-danger ${styles.noUnderline}`}>Register</a></p>
-            </div>
+                <button type="button" className={`${styles.socialLogin} ${styles.github} btn btn-primary btn-lg form-control form-control-lg`} onClick={handleGitHubAuth}>
+                    <i class="fab fa-github me-2"></i>&nbsp;&nbsp;GitHub
+                </button>
+
+                <button type="button" className={`${styles.socialLogin} ${styles.discord} btn btn-primary btn-lg form-control form-control-lg`} onClick={handleDiscordAuth}>
+                    <i class="fab fa-discord me-2"></i>&nbsp;&nbsp;Discord
+                </button>
 
           </form>
         </div>

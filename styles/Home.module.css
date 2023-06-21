@@ -2,7 +2,7 @@
 .divider:before {
 content: "";
 flex: 1;
-height: 1px;
+height: 2px;
 background: #eee;
 }
 .hcustom {
@@ -24,6 +24,63 @@ border-radius: 2rem;
 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
+.socialLogin{
+    margin-top: 0.4rem;
+    margin-bottom: 0.4rem;
+    margin-left: 0.2rem;
+    margin-right: 0.2;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
 .noUnderline {
 text-decoration: none;
 }
+
+
+.signinStyles {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #0d6efd;
+    font-weight: bolder;
+}
+
+.signinStylesV2 {
+white-space: nowrap;
+}
+
+  .google {
+    background-color: #55acee;
+  }
+  
+  .google:hover,
+  .google:focus,
+  .google:active {
+    background-color: #3d8ec9; /* Darker hover/focus/active color */
+    /* Add any other styles you want for the hover/focus/active state */
+  }
+  
+  .github {
+    background-color: #0d6efd;
+  }
+  
+  .github:hover,
+  .github:focus,
+  .github:active {
+    background-color: #0a5cb5; /* Darker hover/focus/active color */
+    /* Add any other styles you want for the hover/focus/active state */
+  }
+  
+  .discord {
+    background-color: #3b5998;
+  }
+  
+  .discord:hover,
+  .discord:focus,
+  .discord:active {
+    background-color: #304675; /* Darker hover/focus/active color */
+    /* Add any other styles you want for the hover/focus/active state */
+  }
+  
