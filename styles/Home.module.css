@@ -1,0 +1,29 @@
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.hcustom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.hcustom {
+height: 100%;
+}
+}
+
+.login {
+padding-left: 2.5rem; 
+padding-right: 2.5rem;
+}
+
+.socialMediaLogin{
+border-radius: 2rem;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.noUnderline {
+text-decoration: none;
+}
