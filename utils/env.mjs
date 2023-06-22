@@ -21,22 +21,22 @@ export const env = {
 
   DISCORD_ID: process.env.DISCORD_ID,
   DISCORD_SECRET: process.env.DISCORD_SECRET,
-};
+}
 
 export function checkAllEnvironmentVariablesPresent() {
   const missingEnvVariables = Object.entries(env)
     .filter(([_envKey, envValue]) => !envValue)
-    .map(([envKey, _envValue]) => envKey);
+    .map(([envKey, _envValue]) => envKey)
 
   if (missingEnvVariables.length > 0) {
     throw new Error(
       `You have some missing env variables :( \n
         Please add the following env variables to .env.local file: ${missingEnvVariables.join(
-          ", "
+          ', '
         )}
       `
-    );
+    )
   }
 }
 
-checkAllEnvironmentVariablesPresent();
+checkAllEnvironmentVariablesPresent()

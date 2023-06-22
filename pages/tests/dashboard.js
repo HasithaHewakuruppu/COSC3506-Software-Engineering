@@ -1,24 +1,24 @@
-import styles from '../../styles/DashBoard.module.css';
-import Calendar from '../../components/calendar';
-import { signOut, getSession } from 'next-auth/react';
-import { useState } from 'react';
-import { PulseLoader } from 'react-spinners';
+import styles from '../../styles/DashBoard.module.css'
+import Calendar from '../../components/calendar'
+import { signOut, getSession } from 'next-auth/react'
+import { useState } from 'react'
+import { PulseLoader } from 'react-spinners'
 
 export default function Dashboard({ session }) {
-  const [loggingOut, setLoggingOut] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false)
 
   if (!session) {
-    if (typeof window !== "undefined") {
-      window.location.href = "/";
+    if (typeof window !== 'undefined') {
+      window.location.href = '/'
     }
-    return null;
+    return null
   }
 
   const handleLogout = async () => {
-    setLoggingOut(true);
-    await signOut();
-    window.location.href = '/';
-  };
+    setLoggingOut(true)
+    await signOut()
+    window.location.href = '/'
+  }
 
   return (
     <>
@@ -27,9 +27,11 @@ export default function Dashboard({ session }) {
           <h1>The Navbar goes here</h1>
           <div className={`${styles.logoutButton}`}>
             {loggingOut ? (
-              <PulseLoader color="#0d6efd"/>
+              <PulseLoader color="#0d6efd" />
             ) : (
-              <button className='btn btn-primary' onClick={handleLogout}>Logout</button>
+              <button className="btn btn-primary" onClick={handleLogout}>
+                Logout
+              </button>
             )}
           </div>
         </div>
@@ -49,14 +51,14 @@ export default function Dashboard({ session }) {
         </div>
       </div>
     </>
-  );
+  )
 }
 
 export async function getServerSideProps(context) {
-  const session = await getSession(context);
+  const session = await getSession(context)
   return {
     props: {
       session: session ? session : null,
     },
-  };
+  }
 }

@@ -10,37 +10,37 @@
 */
 
 // sample for how to access env variable
-import { env } from "../../utils/env.mjs";
-const dbUrl = env.DATABASE_URL;
+import { env } from '../../utils/env.mjs'
+const dbUrl = env.DATABASE_URL
 
-import { prisma } from "../../lib/db";
-const randomId = (len) => Math.random().toString(16).slice(len);
+import { prisma } from '../../lib/db'
+const randomId = (len) => Math.random().toString(16).slice(len)
 
 export default async function createPost(req, res) {
-  if (req.method === "GET") {
-    const count = await prisma.post.count();
+  if (req.method === 'GET') {
+    const count = await prisma.post.count()
     console.log(
-      "Before creating the post there were " + count + " posts in the database"
-    );
+      'Before creating the post there were ' + count + ' posts in the database'
+    )
 
     await prisma.post.create({
       data: {
-        slug: "my-unique-slug" + randomId(10),
-        title: "hey",
-        body: "yo",
+        slug: 'my-unique-slug' + randomId(10),
+        title: 'hey',
+        body: 'yo',
       },
-    });
+    })
 
     console.log(
-      "After creating the post there should be " +
+      'After creating the post there should be ' +
         parseInt(count + 1) +
-        " posts in the database"
-    );
+        ' posts in the database'
+    )
 
     res
       .status(200)
-      .json({ data: "Yaayyyy there should be a new database record" });
+      .json({ data: 'Yaayyyy there should be a new database record' })
   } else {
-    res.status(404).send("Not found");
+    res.status(404).send('Not found')
   }
 }
