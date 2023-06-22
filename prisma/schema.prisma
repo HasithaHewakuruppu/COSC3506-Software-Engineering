@@ -16,7 +16,7 @@ model Post {
 
 model Account {
   id                 String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String  
+  userId             String  @db.ObjectId
   type               String
   provider           String
   providerAccountId  String
@@ -36,7 +36,7 @@ model Account {
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -49,6 +49,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  labels        Label[]
 }
 
 /// This model isn't needed unless we use passwordless sign in emails.
@@ -59,4 +60,18 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Category {
+  WORK
+  LEISURE
+  FITNESS
+}
+
+model Label {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  category  Category
+  name      String   @unique
+  userEmail String
+  user        User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }
