@@ -11,5 +11,8 @@ Here are a helpful set of commands to run when you first start the application:
 7. On one terminal run, `npm run dev` (This will start the development server)
 8. On the other terminal run, `npm run studio` (This will open up prisma studio)
 
+Some optional commands:
+1. Run `npm run pretty` to prettyify your code before commiting! (This will ensure a consistent style across the app)
+
 If anything is incorrect or you experience issues, please contact Abdul's lawyer
 (jk let me know and I'll try to fix it)
