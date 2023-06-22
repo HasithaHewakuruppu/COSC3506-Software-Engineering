@@ -1,28 +1,25 @@
-import styles from "../styles/Home.module.css";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { PulseLoader } from "react-spinners";
+import styles from '../styles/Home.module.css'
+import { signIn } from 'next-auth/react'
+import { useState } from 'react'
+import { PulseLoader } from 'react-spinners'
 
 export default function HomePage() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleGoogleAuth = async () => {
-    setIsLoading(true);
-    await signIn("google", { callbackUrl: "/tests/dashboard" });
-    
-  };
+    setIsLoading(true)
+    await signIn('google', { callbackUrl: '/tests/dashboard' })
+  }
 
   const handleDiscordAuth = async () => {
-    setIsLoading(true);
-    await signIn("discord", { callbackUrl: "/tests/dashboard" });
-    
-  };
+    setIsLoading(true)
+    await signIn('discord', { callbackUrl: '/tests/dashboard' })
+  }
 
   const handleGitHubAuth = async () => {
-    setIsLoading(true);
-    await signIn("github", { callbackUrl: "/tests/dashboard" });
-   
-  };
+    setIsLoading(true)
+    await signIn('github', { callbackUrl: '/tests/dashboard' })
+  }
 
   return (
     <section class="vh-100">
@@ -38,17 +35,13 @@ export default function HomePage() {
           </div>
           <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
             <form>
-              <h2
-                className={`${styles.signinStyles} lead fw-bold mb-0 me-3`}
-              >
-                {isLoading ? (
-                  <PulseLoader color="#0d6efd" />
-                ) : (
-                  "Sign in"
-                )}
+              <h2 className={`${styles.signinStyles} lead fw-bold mb-0 me-3`}>
+                {isLoading ? <PulseLoader color="#0d6efd" /> : 'Sign in'}
               </h2>
 
-              <div className={`${styles.divider} d-flex align-items-center my-4 `}>
+              <div
+                className={`${styles.divider} d-flex align-items-center my-4 `}
+              >
                 <p class="text-center fw-bold mx-3 mb-0 ">with</p>
               </div>
 
@@ -80,7 +73,9 @@ export default function HomePage() {
         </div>
       </div>
       <div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-        <div class="text-white mb-3 mb-md-0">Copyright © 2023. All rights reserved.</div>
+        <div class="text-white mb-3 mb-md-0">
+          Copyright © 2023. All rights reserved.
+        </div>
         <div>
           <a href="#!" class="text-white me-4">
             <i class="fab fa-facebook-f"></i>
@@ -97,5 +92,5 @@ export default function HomePage() {
         </div>
       </div>
     </section>
-  );
+  )
 }
