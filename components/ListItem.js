@@ -9,16 +9,20 @@ function ListItem(props) {
   }
 
   let categoryColor = ''
+  let labelColor = ''
 
   switch (props.category) {
     case 'LEISURE':
       categoryColor = styles.categoryLeisure
+      labelColor = styles.labelLeisure
       break
     case 'WORK':
       categoryColor = styles.categoryWork
+      labelColor = styles.labelWork
       break
     case 'FITNESS':
       categoryColor = styles.categoryFitness
+      labelColor = styles.labelFitness
       break
     default:
       categoryColor = styles.categoryNone
@@ -29,8 +33,11 @@ function ListItem(props) {
     <div className={`${styles.itemContainer} ${categoryColor}`}>
       <div className={styles.unexpandedContainer}>
         <input type="checkbox" />
+        <div className={`${styles.label} ${labelColor}`}>
+          <p className={styles.pEdit}>{props.label}</p>
+        </div>
         <p className={styles.listItem}>{props.title}</p>
-        <p className={styles.time}>{props.duration}</p>
+        <p className={styles.pEdit}>{props.duration}</p>
         <div className={styles.favicons}>
           <i
             className={`fa ${expanded ? 'fa-caret-up' : 'fa-caret-down'}`}
@@ -42,8 +49,8 @@ function ListItem(props) {
         <div className={styles.expandedContainer}>
           <p className={styles.description}>{props.description}</p>
           <div className={styles.favicons}>
-            <i className="fa fa-edit"></i>
-            <i className="fa fa-trash"></i>
+            <i className={`${styles.editIcon} fa fa-edit`}></i>
+            <i className={`${styles.trashIcon} fa fa-trash`}></i>
           </div>
         </div>
       )}

@@ -10,7 +10,8 @@ export default function List({ items }) {
           title={item.title}
           duration={item.duration}
           description={item.description}
-          category={item.category}
+          category={item.label.category}
+          label={item.label.name}
         />
       ))}
     </ul>
