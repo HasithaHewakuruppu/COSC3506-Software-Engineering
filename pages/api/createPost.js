@@ -11,6 +11,7 @@
 
 // sample for how to access env variable
 import { env } from '../../utils/env.mjs'
+// eslint-disable-next-line no-unused-vars
 const dbUrl = env.DATABASE_URL
 
 import { prisma } from '../../lib/db'
