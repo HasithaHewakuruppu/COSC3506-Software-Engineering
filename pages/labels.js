@@ -1,11 +1,16 @@
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { HOME_PAGE, LOGIN_PAGE } from '../utils/routes'
 import Spinner from '../components/Spinner'
 import { prisma } from '../lib/db'
 import { getSession } from 'next-auth/react'
+import CreatableSelect from 'react-select/creatable'
+import { LEISURE_COLOR, WORK_COLOR, FITNESS_COLOR } from '../utils/colors'
 
 export default function RestrictedPage({ session, alreadyHasLabels }) {
+  const [workLabels, setWorkLabels] = useState([])
+  const [leisureLabels, setLeisureLabels] = useState([])
+  const [fitnessLabels, setFitnessLabel] = useState([])
   const router = useRouter()
   useEffect(() => {
     if (!session) {
@@ -21,10 +26,108 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
   }
 
   return (
-    <div>
-      <h1>Let&apos;s create your labels...</h1>
+    <div
+      className="container-sm my-8"
+      style={{
+        maxWidth: '1000px',
+      }}
+    >
+      <h1 className="mt-5 mb-3">Let&apos;s Create Your Labels!</h1>
+      <div className="d-flex flex-column gap-3">
+        <div>
+          <label className="fs-8 fw-light text-muted">
+            Create your work labels:
+          </label>
+          <LabelPicker
+            category="WORK"
+            onChange={(options) => {
+              setWorkLabels([
+                options.map((option) => ({
+                  name: option.value,
+                  category: 'WORK',
+                })),
+              ])
+            }}
+          />
+        </div>
+        <div>
+          <label className="fs-8 fw-light text-muted">
+            Create your leisure labels:
+          </label>
+          <LabelPicker
+            category="LEISURE"
+            onChange={(options) => {
+              setLeisureLabels([
+                options.map((option) => ({
+                  name: option.value,
+                  category: 'LEISURE',
+                })),
+              ])
+            }}
+          />
+        </div>
+        <div>
+          <label className="fs-8 fw-light text-muted">
+            Create your fitness labels:
+          </label>
+          <LabelPicker
+            category="FITNESS"
+            onChange={(options) => {
+              setFitnessLabel([
+                options.map((option) => ({
+                  name: option.value,
+                  category: 'FITNESS',
+                })),
+              ])
+            }}
+          />
+        </div>
+      </div>
+      <div
+        className="d-flex my-5"
+        style={{
+          height: '48px',
+        }}
+      >
+        <button type="button" className="btn btn-dark w-100 h-100">
+          Create Labels
+        </button>
+      </div>
     </div>
   )
+}
+
+function LabelPicker({ category, onChange }) {
+  const backgroundColor = getColorForCategory(category)
+
+  return (
+    <CreatableSelect
+      isClearable
+      isMulti
+      placeholder={category.toLowerCase() + ' labels'}
+      styles={{
+        multiValue: (providedStyles) => ({
+          ...providedStyles,
+          backgroundColor: backgroundColor,
+        }),
+      }}
+      onChange={(e) => {
+        onChange(e)
+      }}
+    />
+  )
+}
+
+function getColorForCategory(category) {
+  if (category === 'WORK') {
+    return WORK_COLOR
+  }
+  if (category === 'LEISURE') {
+    return LEISURE_COLOR
+  }
+  if (category === 'FITNESS') {
+    return FITNESS_COLOR
+  }
 }
 
 export const getServerSideProps = async (context) => {
