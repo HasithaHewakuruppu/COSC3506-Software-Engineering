@@ -52,7 +52,7 @@ tbody td:hover,
 }
 tbody td:hover:after,
 .selected:after {
-  background: #2a3246;
+  background: #55acee;
 }
 
 tbody td:active {

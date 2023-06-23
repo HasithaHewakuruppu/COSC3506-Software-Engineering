@@ -3,6 +3,8 @@ import Calendar from '../../components/calendar'
 import { signOut, getSession } from 'next-auth/react'
 import { useState } from 'react'
 import { PulseLoader } from 'react-spinners'
+import List from './listPage'
+import PieChart from '../../components/PieChart'
 
 export default function Dashboard({ session }) {
   const [loggingOut, setLoggingOut] = useState(false)
@@ -39,14 +41,14 @@ export default function Dashboard({ session }) {
 
       <div className={styles.container}>
         <div className={styles.left}>
-          <h2>List could go here</h2>
+          <List />
         </div>
         <div className={styles.right}>
           <div className={`${styles.top} ${styles.fullHeight}`}>
             <Calendar />
           </div>
           <div className={`${styles.bottom} ${styles.fullHeight}`}>
-            <h2>Pie Chart could go here</h2>
+            <PieChart />
           </div>
         </div>
       </div>

@@ -1,0 +1,53 @@
+.itemContainer {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-left: 8px solid;
+  border-radius: 5px;
+}
+
+.unexpandedContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.listItem {
+  list-style-type: none;
+  flex-grow: 1;
+  margin: 0;
+  margin-left: 10px;
+}
+
+.time {
+  margin: 0;
+}
+
+.favicons {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  justify-content: flex-end;
+}
+
+.favicons i {
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.categoryLeisure {
+  border-left-color: #fde68a;
+}
+
+.categoryWork {
+  border-left-color: #bfdbfe;
+}
+
+.categoryFitness {
+  border-left-color: #bbf7d0;
+}
+
+.categoryNone {
+  border-left-color: black;
+}

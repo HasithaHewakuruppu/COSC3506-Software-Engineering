@@ -13,7 +13,11 @@
 }
 
 .left {
-  background-color: #ff0000; /* Set the background color of the left side */
+  background-color: rgb(
+    193,
+    125,
+    125
+  ); /* Set the background color of the left side */
   /* Add any other styles you want for the left side */
 }
 
