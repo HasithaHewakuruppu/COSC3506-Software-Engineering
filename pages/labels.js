@@ -1,35 +1,46 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { HOME_PAGE, LOGIN_PAGE } from '../utils/routes'
-import { useSession } from 'next-auth/react'
 import Spinner from '../components/Spinner'
-import useSwr from 'swr'
-import { fetcher } from '../lib/fetcher'
+import { prisma } from '../lib/db'
+import { getSession } from 'next-auth/react'
 
-export default function RestrictedPage() {
+export default function RestrictedPage({ session, alreadyHasLabels }) {
   const router = useRouter()
-  const { status } = useSession()
-  const { data: categories, isLoading: isLoadingCategories } = useSwr(
-    '/api/labels',
-    fetcher
-  )
-
-  console.log(categories)
   useEffect(() => {
-    if (status === 'unauthenticated') {
+    if (!session) {
       router.push(LOGIN_PAGE)
-    } else if (status === 'authenticated' && categories?.length > 0) {
+    }
+    if (session && alreadyHasLabels) {
       router.push(HOME_PAGE)
     }
-  }, [status, router, isLoadingCategories])
+  }, [])
 
-  if (status === 'loading' || isLoadingCategories) {
+  if (!session || alreadyHasLabels) {
     return <Spinner fullPageSpinner />
   }
 
   return (
     <div>
-      <h1>Set up your labels...</h1>
+      <h1>Let&apos;s create your labels...</h1>
     </div>
   )
+}
+
+export const getServerSideProps = async (context) => {
+  const session = await getSession(context)
+  let labels = []
+  if (session?.user?.email) {
+    labels = await prisma.label.findMany({
+      where: {
+        userEmail: session?.user?.email,
+      },
+    })
+  }
+  return {
+    props: {
+      session: session ? session : null,
+      alreadyHasLabels: labels?.length > 0,
+    },
+  }
 }
