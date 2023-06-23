@@ -13,7 +13,7 @@
   align-items: center;
 }
 
-.expandedContainer{
+.expandedContainer {
   border-top: 1px solid rgba(117, 117, 117, 0.491);
   margin-top: 5px;
 }
@@ -25,16 +25,16 @@
   margin-left: 10px;
 }
 
-.description{
+.description {
   margin-top: 10px;
   justify-content: center;
 }
 
-.label{
+.label {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 11ch;
+  width: 12ch;
   margin-left: 10px;
   border-radius: 10px;
   border: 1px solid black;
@@ -53,7 +53,7 @@
 }
 
 .labelLeisure {
-  background-color:  #fde68a;
+  background-color: #fde68a;
 }
 
 .labelWork {
@@ -91,11 +91,11 @@
 }
 
 .favicons i.trashIcon:hover {
-  color: red; 
-  transform: scale(1.5); 
+  color: red;
+  transform: scale(1.5);
 }
 
 .favicons i.editIcon:hover {
-  color: green; 
-  transform: scale(1.5); 
+  color: green;
+  transform: scale(1.5);
 }

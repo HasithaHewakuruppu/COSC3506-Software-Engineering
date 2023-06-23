@@ -1,0 +1,53 @@
+.listContainer {
+  max-height: 72vh;
+  overflow-y: auto;
+}
+
+.upperSubContainer {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+}
+
+.lowerSubContainer {
+  background-color: #f2f2f2;
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.button {
+  margin: 10px;
+}
+
+.content {
+  margin-bottom: 0px;
+}
+
+.headingContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
+
+.heading {
+  font-weight: 400;
+  font-size: large;
+}
+
+.currentDate {
+  margin: 10px;
+  font-weight: 600;
+}
+
+.faviconContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px;
+}
+
+.favIcon {
+  margin-right: 10px;
+}

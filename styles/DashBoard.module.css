@@ -13,11 +13,8 @@
 }
 
 .left {
-  background-color: rgb(
-    193,
-    125,
-    125
-  ); /* Set the background color of the left side */
+  background-color: #3b5998;
+  /* Set the background color of the left side */
   /* Add any other styles you want for the left side */
 }
 
@@ -45,6 +42,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #55acee;
+  color: white;
 }
 
 .logoutButton {
