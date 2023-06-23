@@ -25,6 +25,7 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
         headers: { 'Content-Type': 'application/json' },
         body,
       })
+      router.push(HOME_PAGE)
     } finally {
       setLoading(false)
     }
