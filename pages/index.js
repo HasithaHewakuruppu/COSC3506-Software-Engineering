@@ -12,17 +12,23 @@ export default function HomePage({ session }) {
 
   const handleGoogleAuth = async () => {
     setIsLoading(true)
-    await signIn('google', { callbackUrl: '/tests/dashboard' })
+    await signIn('google', {
+      callbackUrl: '/tests/dashboard',
+    })
   }
 
   const handleDiscordAuth = async () => {
     setIsLoading(true)
-    await signIn('discord', { callbackUrl: '/tests/dashboard' })
+    await signIn('discord', {
+      callbackUrl: '/tests/dashboard',
+    })
   }
 
   const handleGitHubAuth = async () => {
     setIsLoading(true)
-    await signIn('github', { callbackUrl: '/tests/dashboard' })
+    await signIn('github', {
+      callbackUrl: '/tests/dashboard',
+    })
   }
 
   // redirect to dashboard if logged in
@@ -61,7 +67,8 @@ export default function HomePage({ session }) {
                 className={`${styles.socialLogin} ${styles.google} btn btn-primary btn-lg form-control form-control-lg`}
                 onClick={handleGoogleAuth}
               >
-                <i className="fab fa-google me-2"></i>&nbsp;&nbsp;Google
+                <i className="fab fa-google me-2"></i>
+                &nbsp;&nbsp;Google
               </button>
 
               <button
@@ -69,7 +76,8 @@ export default function HomePage({ session }) {
                 className={`${styles.socialLogin} ${styles.github} btn btn-primary btn-lg form-control form-control-lg`}
                 onClick={handleGitHubAuth}
               >
-                <i className="fab fa-github me-2"></i>&nbsp;&nbsp;GitHub
+                <i className="fab fa-github me-2"></i>
+                &nbsp;&nbsp;GitHub
               </button>
 
               <button
@@ -77,7 +85,8 @@ export default function HomePage({ session }) {
                 className={`${styles.socialLogin} ${styles.discord} btn btn-primary btn-lg form-control form-control-lg`}
                 onClick={handleDiscordAuth}
               >
-                <i className="fab fa-discord me-2"></i>&nbsp;&nbsp;Discord
+                <i className="fab fa-discord me-2"></i>
+                &nbsp;&nbsp;Discord
               </button>
             </form>
           </div>

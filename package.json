@@ -6,7 +6,7 @@
     "start": "next start",
     "studio": "dotenv -e .env.local -- npx prisma studio",
     "push": "dotenv -e .env.local -- npx prisma db push",
-    "pretty": "prettier --single-quote --tab-width 2 --no-semi --write .",
+    "pretty": "prettier --write .",
     "lint": "eslint ./ --ext js,jsx --fix"
   },
   "dependencies": {
@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "dotenv-cli": "^7.2.1",
-    "eslint": "^8.43.0",
+    "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
     "prettier": "^2.8.8",
