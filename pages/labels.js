@@ -11,7 +11,25 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
   const [workLabels, setWorkLabels] = useState([])
   const [leisureLabels, setLeisureLabels] = useState([])
   const [fitnessLabels, setFitnessLabel] = useState([])
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
+
+  async function saveLabels() {
+    setLoading(true)
+    const body = JSON.stringify({
+      labels: [...workLabels, ...leisureLabels, ...fitnessLabels],
+    })
+    try {
+      await fetch('/api/labels', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body,
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
+
   useEffect(() => {
     if (!session) {
       router.push(LOGIN_PAGE)
@@ -41,12 +59,12 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
           <LabelPicker
             category="WORK"
             onChange={(options) => {
-              setWorkLabels([
+              setWorkLabels(
                 options.map((option) => ({
                   name: option.value,
                   category: 'WORK',
-                })),
-              ])
+                }))
+              )
             }}
           />
         </div>
@@ -57,12 +75,12 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
           <LabelPicker
             category="LEISURE"
             onChange={(options) => {
-              setLeisureLabels([
+              setLeisureLabels(
                 options.map((option) => ({
                   name: option.value,
                   category: 'LEISURE',
-                })),
-              ])
+                }))
+              )
             }}
           />
         </div>
@@ -73,12 +91,12 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
           <LabelPicker
             category="FITNESS"
             onChange={(options) => {
-              setFitnessLabel([
+              setFitnessLabel(
                 options.map((option) => ({
                   name: option.value,
                   category: 'FITNESS',
-                })),
-              ])
+                }))
+              )
             }}
           />
         </div>
@@ -89,8 +107,14 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
           height: '48px',
         }}
       >
-        <button type="button" className="btn btn-dark w-100 h-100">
-          Create Labels
+        <button
+          type="button"
+          className="btn btn-dark w-100 h-100"
+          onClick={() => {
+            saveLabels()
+          }}
+        >
+          {loading ? <Spinner /> : 'Create Labels'}
         </button>
       </div>
     </div>
