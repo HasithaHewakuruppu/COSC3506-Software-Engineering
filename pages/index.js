@@ -13,21 +13,21 @@ export default function HomePage({ session }) {
   const handleGoogleAuth = async () => {
     setIsLoading(true)
     await signIn('google', {
-      callbackUrl: '/tests/dashboard',
+      callbackUrl: HOME_PAGE,
     })
   }
 
   const handleDiscordAuth = async () => {
     setIsLoading(true)
     await signIn('discord', {
-      callbackUrl: '/tests/dashboard',
+      callbackUrl: HOME_PAGE,
     })
   }
 
   const handleGitHubAuth = async () => {
     setIsLoading(true)
     await signIn('github', {
-      callbackUrl: '/tests/dashboard',
+      callbackUrl: HOME_PAGE,
     })
   }
 
