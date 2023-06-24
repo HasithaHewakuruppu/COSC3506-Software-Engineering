@@ -51,7 +51,12 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
         maxWidth: '1000px',
       }}
     >
-      <h1 className="mt-5 mb-3">Let&apos;s Create Your Labels!</h1>
+      <h1 className="mt-5 mb-3">
+        Seems you haven&apos;t set up your labels yet...
+      </h1>
+      <p className="fw-light">
+        Help us decide what&apos;s important in your life
+      </p>
       <div className="d-flex flex-column gap-3">
         <div>
           <label className="fs-8 fw-light text-muted">
@@ -129,7 +134,7 @@ function LabelPicker({ category, onChange }) {
     <CreatableSelect
       isClearable
       isMulti
-      placeholder={category.toLowerCase() + ' labels'}
+      placeholder={''}
       styles={{
         multiValue: (providedStyles) => ({
           ...providedStyles,
