@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from './../auth/[...nextauth]'
-import { todoSchema } from '../../../validators/todo'
+import { createTodoSchema } from '../../../validators/todo'
 import { ValidationError } from 'yup'
 import { prisma } from '../../../lib/db'
 
@@ -12,7 +12,7 @@ export default async function todos(req, res) {
   if (req.method === 'POST') {
     try {
       const newTodo = req.body
-      const todo = await todoSchema.validate(newTodo)
+      const todo = await createTodoSchema.validate(newTodo)
       await prisma.todo.create({
         data: {
           title: todo.title,
