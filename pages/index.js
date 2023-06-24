@@ -1,10 +1,14 @@
 import styles from '../styles/Home.module.css'
 import { signIn } from 'next-auth/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { PulseLoader } from 'react-spinners'
+import { getSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { HOME_PAGE } from '../utils/routes'
 
-export default function HomePage() {
+export default function HomePage({ session }) {
   const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
 
   const handleGoogleAuth = async () => {
     setIsLoading(true)
@@ -26,6 +30,13 @@ export default function HomePage() {
       callbackUrl: '/tests/dashboard',
     })
   }
+
+  // redirect to dashboard if logged in
+  useEffect(() => {
+    if (session) {
+      router.push(HOME_PAGE)
+    }
+  }, [])
 
   return (
     <section className="vh-100">
@@ -102,4 +113,12 @@ export default function HomePage() {
       </div>
     </section>
   )
+}
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
+  return {
+    props: {
+      session: session ? session : null,
+    },
+  }
 }

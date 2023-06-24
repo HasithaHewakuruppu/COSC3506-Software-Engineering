@@ -5,21 +5,33 @@ import { useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import List from './listPage'
 import PieChart from '../../components/PieChart'
+import { prisma } from '../../lib/db'
+import Spinner from '../../components/Spinner'
+import { useRouter } from 'next/router'
+import { LABELS_PAGE, LOGIN_PAGE } from '../../utils/routes'
+import { useIsClient } from '../../hooks/useIsClient'
 
-export default function Dashboard({ session }) {
+export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
   const [loggingOut, setLoggingOut] = useState(false)
+  const router = useRouter()
+  const isClient = useIsClient()
 
-  if (!session) {
-    if (typeof window !== 'undefined') {
-      window.location.href = '/'
-    }
-    return null
+  if (isClient && doesNotHaveLabelsSetup) {
+    router.push(LABELS_PAGE)
+  }
+
+  if (isClient && !session) {
+    router.push(LOGIN_PAGE)
   }
 
   const handleLogout = async () => {
     setLoggingOut(true)
     await signOut()
     window.location.href = '/'
+  }
+
+  if (doesNotHaveLabelsSetup || !session) {
+    return <Spinner fullPageSpinner />
   }
 
   return (
@@ -58,9 +70,18 @@ export default function Dashboard({ session }) {
 
 export async function getServerSideProps(context) {
   const session = await getSession(context)
+  let labels = []
+  if (session?.user?.email) {
+    labels = await prisma.label.findMany({
+      where: {
+        userEmail: session?.user?.email,
+      },
+    })
+  }
   return {
     props: {
       session: session ? session : null,
+      doesNotHaveLabelsSetup: !(labels?.length > 0),
     },
   }
 }
