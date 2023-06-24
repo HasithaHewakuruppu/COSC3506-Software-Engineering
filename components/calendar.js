@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import styles from '../styles/Calendar.module.css'
 
-function Calendar() {
+export default function Calendar() {
   const today = new Date()
   const [selectedDate, setSelectedDate] = useState(today)
   const [monthData, setMonthData] = useState([])
@@ -180,5 +180,3 @@ function Calendar() {
     </section>
   )
 }
-
-export default Calendar
