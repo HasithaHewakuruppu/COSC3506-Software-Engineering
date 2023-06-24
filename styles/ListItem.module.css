@@ -18,6 +18,10 @@
   margin-top: 5px;
 }
 
+.checkbox {
+  transform: scale(1.5);
+}
+
 .listItem {
   list-style-type: none;
   flex-grow: 1;

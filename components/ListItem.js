@@ -32,7 +32,7 @@ function ListItem(props) {
   return (
     <div className={`${styles.itemContainer} ${categoryColor}`}>
       <div className={styles.unexpandedContainer}>
-        <input type="checkbox" />
+        <input type="checkbox" className={styles.checkbox} />
         <div className={`${styles.label} ${labelColor}`}>
           <p className={styles.pEdit}>{props.label}</p>
         </div>
