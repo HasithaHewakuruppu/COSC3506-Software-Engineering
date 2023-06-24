@@ -1,7 +1,7 @@
 import styles from '../../styles/DashBoard.module.css'
 import Calendar from '../../components/calendar'
 import { signOut, getSession } from 'next-auth/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { PulseLoader } from 'react-spinners'
 import List from './listPage'
 import PieChart from '../../components/PieChart'
@@ -9,16 +9,16 @@ import { prisma } from '../../lib/db'
 import Spinner from '../../components/Spinner'
 import { useRouter } from 'next/router'
 import { LABELS_PAGE } from '../../utils/routes'
+import { useIsClient } from '../../hooks/useIsClient'
 
 export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
   const [loggingOut, setLoggingOut] = useState(false)
   const router = useRouter()
+  const isClient = useIsClient()
 
-  useEffect(() => {
-    if (doesNotHaveLabelsSetup) {
-      router.push(LABELS_PAGE)
-    }
-  }, [])
+  if (isClient && doesNotHaveLabelsSetup) {
+    router.push(LABELS_PAGE)
+  }
 
   if (!session) {
     if (typeof window !== 'undefined') {
