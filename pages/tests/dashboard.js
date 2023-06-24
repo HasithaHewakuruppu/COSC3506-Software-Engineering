@@ -8,7 +8,7 @@ import PieChart from '../../components/PieChart'
 import { prisma } from '../../lib/db'
 import Spinner from '../../components/Spinner'
 import { useRouter } from 'next/router'
-import { LABELS_PAGE } from '../../utils/routes'
+import { LABELS_PAGE, LOGIN_PAGE } from '../../utils/routes'
 import { useIsClient } from '../../hooks/useIsClient'
 
 export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
@@ -20,11 +20,8 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
     router.push(LABELS_PAGE)
   }
 
-  if (!session) {
-    if (typeof window !== 'undefined') {
-      window.location.href = '/'
-    }
-    return null
+  if (isClient && !session) {
+    router.push(LOGIN_PAGE)
   }
 
   const handleLogout = async () => {
@@ -33,7 +30,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
     window.location.href = '/'
   }
 
-  if (doesNotHaveLabelsSetup) {
+  if (doesNotHaveLabelsSetup || !session) {
     return <Spinner fullPageSpinner />
   }
 
