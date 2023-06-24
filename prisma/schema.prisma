@@ -50,6 +50,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   labels        Label[]
+  todos         Todo[]
 }
 
 /// This model isn't needed unless we use passwordless sign in emails.
@@ -69,9 +70,22 @@ enum Category {
 }
 
 model Label {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  category  Category
-  name      String   @unique
-  userEmail String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  category    Category
+  name        String   @unique
+  userEmail   String
   user        User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  todos       Todo[]
+}
+
+model Todo {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  description  String
+  duration     Int
+  date         DateTime
+  labelId      String  @db.ObjectId
+  label        Label   @relation(fields: [labelId], references: [id], onDelete: Cascade)
+  userEmail    String
+  user         User    @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }
