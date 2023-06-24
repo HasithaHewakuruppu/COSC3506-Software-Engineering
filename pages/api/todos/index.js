@@ -1,10 +1,10 @@
 import { getServerSession } from 'next-auth/next'
-import { authOptions } from './auth/[...nextauth]'
-import { todoSchema } from '../../validators/todo'
+import { authOptions } from './../auth/[...nextauth]'
+import { todoSchema } from '../../../validators/todo'
 import { ValidationError } from 'yup'
-import { prisma } from '../../lib/db'
+import { prisma } from '../../../lib/db'
 
-export default async function label(req, res) {
+export default async function todos(req, res) {
   const session = await getServerSession(req, res, authOptions)
   if (!session?.user?.email) {
     return res.status(401).send('Unauthorized')
