@@ -72,7 +72,7 @@ enum Category {
 model Label {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   category    Category
-  name        String   @unique
+  name        String
   userEmail   String
   user        User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   todos       Todo[]
