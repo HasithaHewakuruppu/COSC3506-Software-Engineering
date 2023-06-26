@@ -33,23 +33,29 @@ function AddItemForm() {
 
     const newItem = {
       title,
-      duration: hours * 60 + minutes,
+      duration: (hours * 60 + minutes) * 60 * 1000, // should be in miliseconds for DB
       description,
       labelId,
       date: selectedDate,
       userEmail,
     }
-
     try {
-      await fetch('http://localhost:3000/api/todos', {
+      const response = await fetch('http://localhost:3000/api/todos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(newItem),
       })
+
+      if (response.ok) {
+        alert('Task Added!')
+      } else {
+        const error = await response.json()
+        alert(error.message)
+      }
     } catch (error) {
-      alert('Error adding item:', error)
+      alert(error.message)
     }
 
     setIsLoading(false)
@@ -122,20 +128,36 @@ function AddItemForm() {
               <div className="row">
                 <div className="col-md-6">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     placeholder="Hours"
                     value={hours}
-                    onChange={(e) => setHours(e.target.value)}
+                    onChange={(e) => {
+                      const inputValue = e.target.value
+                      const hoursValue = parseInt(inputValue)
+                      if (hoursValue < 0) {
+                        setHours('')
+                      } else {
+                        setHours(hoursValue)
+                      }
+                    }}
                   />
                 </div>
                 <div className="col-md-6">
                   <input
-                    type="text"
+                    type="number"
                     className="form-control"
                     placeholder="Minutes"
                     value={minutes}
-                    onChange={(e) => setMinutes(e.target.value)}
+                    onChange={(e) => {
+                      const inputValue = e.target.value
+                      const minutesValue = parseInt(inputValue)
+                      if (minutesValue < 0 || minutesValue > 59) {
+                        setMinutes('')
+                      } else {
+                        setMinutes(minutesValue)
+                      }
+                    }}
                   />
                 </div>
               </div>
