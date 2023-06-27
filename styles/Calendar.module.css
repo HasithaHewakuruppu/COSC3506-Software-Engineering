@@ -94,16 +94,16 @@
   background: #0a5cb5;
 }
 
-#disabled {
+.disabled {
   cursor: default;
-  background: #fff;
+  background: transparent;
 }
 
-#disabled:hover {
-  background: #fff;
+.disabled:hover {
   color: #c9c9c9;
 }
-#disabled:hover:after {
+
+.disabled:hover:after {
   background: transparent;
 }
 

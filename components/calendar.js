@@ -163,18 +163,26 @@ export default function Calendar() {
               {monthData.map((week, index) => (
                 <tr key={index}>
                   {week.map((day, dayIndex) => {
-                    const date = new Date(
-                      selectedDate.getFullYear(),
-                      selectedDate.getMonth(),
-                      day
-                    ).toLocaleDateString('en-GB')
-                    const isHighlighted = highlightedDates.includes(date)
+                    const isCurrentMonthDay = day !== ''
+                    const isHighlighted = highlightedDates.includes(
+                      new Date(
+                        selectedDate.getFullYear(),
+                        selectedDate.getMonth(),
+                        day
+                      ).toLocaleDateString('en-GB')
+                    )
                     const cellClass = isHighlighted ? styles.toDo : ''
+                    const disabledClass = isCurrentMonthDay
+                      ? ''
+                      : styles.disabled
+
                     return (
                       <td
                         key={dayIndex}
-                        onClick={() => handleClick(day)}
-                        className={cellClass}
+                        onClick={() => isCurrentMonthDay && selectDate(day)}
+                        className={`${
+                          isCurrentMonthDay ? cellClass : ''
+                        } ${disabledClass}`}
                       >
                         {day}
                       </td>
