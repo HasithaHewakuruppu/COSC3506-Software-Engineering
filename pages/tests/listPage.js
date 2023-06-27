@@ -22,7 +22,7 @@ const ListPage = () => {
 
   return (
     <div>
-      <List items={items} />
+      <List items={items} apiUrl={apiUrl} />
     </div>
   )
 }
