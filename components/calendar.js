@@ -90,21 +90,8 @@ export default function Calendar() {
     setSelectedDate(newDate)
   }
 
-  function handleClick(day) {
-    // selectDate(day)
-    // const listDate = new Date(
-    //   selectedDate.getFullYear(),
-    //   selectedDate.getMonth(),
-    //   day
-    // )
-    // const url = listDate
-    //   .toLocaleDateString('en-GB', {
-    //     day: '2-digit',
-    //     month: '2-digit',
-    //     year: 'numeric',
-    //   })
-    //   .replace(/\//g, '-')
-    // window.location.href = `/list/${url}`
+  function handleClick() {
+    // This is the function that will be called when the user clicks on the date  <-------------------
   }
 
   useEffect(() => {
@@ -179,7 +166,11 @@ export default function Calendar() {
                     return (
                       <td
                         key={dayIndex}
-                        onClick={() => isCurrentMonthDay && selectDate(day)}
+                        onClick={() =>
+                          isCurrentMonthDay &&
+                          selectDate(day) &&
+                          handleClick(day)
+                        }
                         className={`${
                           isCurrentMonthDay ? cellClass : ''
                         } ${disabledClass}`}
