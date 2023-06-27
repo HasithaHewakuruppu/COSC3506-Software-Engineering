@@ -8,7 +8,7 @@ import { motion } from 'framer-motion'
 
 Modal.setAppElement('#__next')
 
-export default function List({ items }) {
+export default function List({ items, apiUrl }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const currentDate = new Date().toLocaleDateString('en-GB')
 
@@ -99,7 +99,7 @@ export default function List({ items }) {
           initial={{ scale: 0, opacity: 0 }}
           exit={{ scale: 0, opacity: 0 }}
         >
-          <AddItemForm closeModal={closeModal} />
+          <AddItemForm closeModal={closeModal} apiUrl={apiUrl} />
         </motion.div>
       </Modal>
     </div>

@@ -5,8 +5,9 @@ import styles from '../styles/AddItemForm.module.css'
 import 'react-datepicker/dist/react-datepicker.css'
 import SessionUser from '../components/SessionUser'
 import { toast } from 'react-hot-toast'
+import { useSWRConfig } from 'swr'
 
-function AddItemForm({ closeModal }) {
+function AddItemForm({ closeModal, apiUrl }) {
   const [title, setTitle] = useState('')
   const [hours, setHours] = useState('')
   const [minutes, setMinutes] = useState('')
@@ -14,6 +15,7 @@ function AddItemForm({ closeModal }) {
   const [labelId, setLabelId] = useState('')
   const [selectedDate, setSelectedDate] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const { mutate } = useSWRConfig()
 
   const fetcher = (url) => fetch(url).then((res) => res.json())
   const { data: labels, error } = useSWR(
@@ -53,6 +55,7 @@ function AddItemForm({ closeModal }) {
         toast('Task Added!', {
           duration: 4000,
         })
+        mutate(apiUrl)
       } else {
         const error = await response.json()
         toast('Sorry, we could not add your task. ' + error.message, {
