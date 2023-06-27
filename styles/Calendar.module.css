@@ -87,11 +87,11 @@
   height: 3em;
 }
 
-.to-do {
+.toDo {
   color: #fff;
 }
-.to-do:after {
-  background: #fdcb6e;
+.toDo:after {
+  background: #0a5cb5;
 }
 
 #disabled {

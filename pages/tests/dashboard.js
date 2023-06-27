@@ -3,7 +3,7 @@ import Calendar from '../../components/calendar'
 import { signOut, getSession } from 'next-auth/react'
 import { useState } from 'react'
 import { PulseLoader } from 'react-spinners'
-import List from './listPage'
+import ListPage from './listPage'
 import PieChart from '../../components/PieChart'
 import { prisma } from '../../lib/db'
 import Spinner from '../../components/Spinner'
@@ -53,7 +53,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
 
       <div className={styles.container}>
         <div className={styles.left}>
-          <List />
+          <ListPage />
         </div>
         <div className={styles.right}>
           <div className={`${styles.top} ${styles.fullHeight}`}>

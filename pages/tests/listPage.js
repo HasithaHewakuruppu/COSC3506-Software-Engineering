@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react'
 import List from '../../components/List'
 import useSWR from 'swr'
 
@@ -15,10 +14,10 @@ const ListPage = () => {
   const apiUrl = `http://localhost:3000/api/todos?labels=true&date=${formattedDate}`
 
   const fetcher = (url) => fetch(url).then((res) => res.json())
-  const { data: items, error, isLoading } = useSWR(apiUrl, fetcher)
+  const { data: items, error } = useSWR(apiUrl, fetcher)
 
   if (error) {
-    console.error('Error fetching labels:', error)
+    console.error('Error fetching todos:', error)
   }
 
   return (

@@ -1,11 +1,37 @@
 import React, { useState, useEffect } from 'react'
+import useSWR from 'swr'
 import styles from '../styles/Calendar.module.css'
+
+const fetcher = (url) => fetch(url).then((res) => res.json())
 
 export default function Calendar() {
   const today = new Date()
   const [selectedDate, setSelectedDate] = useState(today)
   const [monthData, setMonthData] = useState([])
   const [highlightedDates, setHighlightedDates] = useState([])
+  const { data: todo, error } = useSWR(
+    'http://localhost:3000/api/todos?labels=true',
+    fetcher
+  )
+
+  if (error) {
+    console.error('Error fetching todos:', error)
+  }
+
+  useEffect(() => {
+    if (todo) {
+      const uniqueDates = [
+        ...new Set(
+          todo.map((item) => {
+            const date = new Date(item.date).toLocaleDateString('en-GB')
+            return date
+          })
+        ),
+      ]
+      setHighlightedDates(uniqueDates)
+      console.log(uniqueDates)
+    }
+  }, [todo])
 
   const getMonthData = (year, month) => {
     const firstDay = new Date(year, month, 1)
@@ -65,34 +91,20 @@ export default function Calendar() {
   }
 
   function handleClick(day) {
-    selectDate(day)
-    const listDate = new Date(
-      selectedDate.getFullYear(),
-      selectedDate.getMonth(),
-      day
-    )
-    const url = listDate
-      .toLocaleDateString('en-GB', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      })
-      .replace(/\//g, '-')
-    window.location.href = `/list/${url}`
-  }
-
-  const fetchHighlightedDates = async () => {
-    try {
-      const response = await fetch('/api/getDates')
-      if (response.ok) {
-        const data = await response.json()
-        setHighlightedDates(data.dates)
-      } else {
-        console.log('Failed to fetch highlighted dates')
-      }
-    } catch (error) {
-      console.log('Error:', error)
-    }
+    // selectDate(day)
+    // const listDate = new Date(
+    //   selectedDate.getFullYear(),
+    //   selectedDate.getMonth(),
+    //   day
+    // )
+    // const url = listDate
+    //   .toLocaleDateString('en-GB', {
+    //     day: '2-digit',
+    //     month: '2-digit',
+    //     year: 'numeric',
+    //   })
+    //   .replace(/\//g, '-')
+    // window.location.href = `/list/${url}`
   }
 
   useEffect(() => {
@@ -100,7 +112,6 @@ export default function Calendar() {
     const year = selectedDate.getFullYear()
     const monthData = getMonthData(year, month)
     setMonthData(monthData)
-    fetchHighlightedDates()
   }, [selectedDate])
 
   return (
@@ -157,9 +168,7 @@ export default function Calendar() {
                       selectedDate.getMonth(),
                       day
                     ).toLocaleDateString('en-GB')
-                    console.log(date)
                     const isHighlighted = highlightedDates.includes(date)
-                    console.log(isHighlighted)
                     const cellClass = isHighlighted ? styles.toDo : ''
                     return (
                       <td
