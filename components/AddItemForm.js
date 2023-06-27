@@ -5,7 +5,7 @@ import styles from '../styles/AddItemForm.module.css'
 import 'react-datepicker/dist/react-datepicker.css'
 import SessionUser from '../components/SessionUser'
 
-function AddItemForm() {
+function AddItemForm({ closeModal }) {
   const [title, setTitle] = useState('')
   const [hours, setHours] = useState('')
   const [minutes, setMinutes] = useState('')
@@ -54,6 +54,8 @@ function AddItemForm() {
         const error = await response.json()
         alert(error.message)
       }
+
+      closeModal()
     } catch (error) {
       alert(error.message)
     }

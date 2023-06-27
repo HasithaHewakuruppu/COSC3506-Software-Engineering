@@ -14,6 +14,7 @@
     "@prisma/client": "^4.16.0",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
+    "framer-motion": "^10.12.17",
     "next": "latest",
     "next-auth": "^4.22.1",
     "plotly.js": "^2.24.2",

@@ -4,6 +4,7 @@ import AddItemForm from './AddItemForm'
 import ListItem from './ListItem'
 import styles from '../styles/List.module.css'
 import Spinner from './Spinner'
+import { motion } from 'framer-motion'
 
 Modal.setAppElement('#__next')
 
@@ -80,8 +81,25 @@ export default function List({ items }) {
         onRequestClose={closeModal}
         contentLabel="Add Task Modal"
         transparent={true}
+        style={{
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '10px',
+          },
+        }}
       >
-        <AddItemForm />
+        <motion.div
+          animate={{ scale: 0.9, opacity: 1 }}
+          initial={{ scale: 0, opacity: 0 }}
+          exit={{ scale: 0, opacity: 0 }}
+        >
+          <AddItemForm closeModal={closeModal} />
+        </motion.div>
       </Modal>
     </div>
   )
