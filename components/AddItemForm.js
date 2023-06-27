@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker'
 import styles from '../styles/AddItemForm.module.css'
 import 'react-datepicker/dist/react-datepicker.css'
 import SessionUser from '../components/SessionUser'
+import { toast } from 'react-hot-toast'
 
 function AddItemForm({ closeModal }) {
   const [title, setTitle] = useState('')
@@ -49,15 +50,23 @@ function AddItemForm({ closeModal }) {
       })
 
       if (response.ok) {
-        alert('Task Added!')
+        toast('Task Added!', {
+          duration: 4000,
+        })
       } else {
         const error = await response.json()
-        alert(error.message)
+        toast('Sorry, we could not add your task. ' + error.message, {
+          duration: 4000,
+        })
       }
 
       closeModal()
     } catch (error) {
-      alert(error.message)
+      toast('Sorry, we could not add your task. ', {
+        duration: 4000,
+      })
+    } finally {
+      closeModal()
     }
 
     setIsLoading(false)
