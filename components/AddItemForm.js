@@ -82,135 +82,146 @@ function AddItemForm({ closeModal, mutateListForToday }) {
   }
 
   return (
-    <div className={styles.modalContainer}>
-      <div className={styles.container}>
-        <h3 className="text-center">Let&apos;s Add Your Task!</h3>
-        <form
-          className={styles.formContainer}
-          id="contactForm"
-          name="contactForm"
-        >
-          <div className="row">
-            <div className="col-md-6 form-group mb-3">
-              <label className="col-form-label">Title</label>
-              <input
-                type="text"
-                className="form-control"
-                name="title"
-                id="title"
-                placeholder="Your task title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div className="col-md-6 form-group mb-3">
-              <label className="col-form-label">Label</label>
-              <select
-                className="form-control"
-                value={labelId}
-                onChange={(e) => setLabelId(e.target.value)}
-              >
-                <option value="">Select Label</option>
-                {labels ? (
-                  labels.map((label) => (
-                    <option key={label.id} value={label.id}>
-                      {label.name}
-                    </option>
-                  ))
-                ) : (
-                  <option disabled>Loading...</option>
-                )}
-              </select>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6 form-group mb-3">
-              <label className="col-form-label">Date</label>
-              <div className={`form-control ${styles.datepickerContainer}`}>
-                <DatePicker
-                  className={`form-control ${styles.datepicker}`}
-                  selected={selectedDate}
-                  onChange={(date) => setSelectedDate(date)}
-                  placeholderText="Select task date"
-                  dateFormat="yyyy-MM-dd"
+    <>
+      <style>{`
+        .datePicker {
+          width: 100%;
+          :hover{
+            cursor: pointer;
+          }
+        }
+      `}</style>
+      <div className={styles.modalContainer}>
+        <div className={styles.container}>
+          <h3 className="text-center">Let&apos;s Add Your Task!</h3>
+          <form
+            className={styles.formContainer}
+            id="contactForm"
+            name="contactForm"
+          >
+            <div className="row">
+              <div className="col-md-6 form-group mb-3">
+                <label className="col-form-label">Title</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="title"
+                  id="title"
+                  placeholder="Your task title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </div>
+              <div className="col-md-6 form-group mb-3">
+                <label className="col-form-label">Label</label>
+                <select
+                  className="form-control"
+                  value={labelId}
+                  onChange={(e) => setLabelId(e.target.value)}
+                >
+                  <option value="">Select Label</option>
+                  {labels ? (
+                    labels.map((label) => (
+                      <option key={label.id} value={label.id}>
+                        {label.name}
+                      </option>
+                    ))
+                  ) : (
+                    <option disabled>Loading...</option>
+                  )}
+                </select>
+              </div>
             </div>
-            <div className="col-md-6 form-group mb-3">
-              <label className="col-form-label">Duration</label>
-              <div className="row">
-                <div className="col-md-6">
-                  <input
-                    type="number"
-                    className="form-control"
-                    placeholder="Hours"
-                    value={hours}
-                    onChange={(e) => {
-                      const inputValue = e.target.value
-                      const hoursValue = parseInt(inputValue)
-                      if (hoursValue < 0) {
-                        setHours('')
-                      } else {
-                        setHours(hoursValue)
-                      }
-                    }}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <input
-                    type="number"
-                    className="form-control"
-                    placeholder="Minutes"
-                    value={minutes}
-                    onChange={(e) => {
-                      const inputValue = e.target.value
-                      const minutesValue = parseInt(inputValue)
-                      if (minutesValue < 0 || minutesValue > 59) {
-                        setMinutes('')
-                      } else {
-                        setMinutes(minutesValue)
-                      }
-                    }}
+            <div className="row">
+              <div className="col-md-6 form-group mb-3">
+                <label className="col-form-label">Date</label>
+                <div className={`form-control ${styles.datepickerContainer}`}>
+                  <DatePicker
+                    className={`form-control ${styles.datepicker}`}
+                    selected={selectedDate}
+                    onChange={(date) => setSelectedDate(date)}
+                    placeholderText="Select task date"
+                    dateFormat="yyyy-MM-dd"
+                    wrapperClassName="datePicker"
                   />
                 </div>
               </div>
+              <div className="col-md-6 form-group mb-3">
+                <label className="col-form-label">Duration</label>
+                <div className="row">
+                  <div className="col-md-6">
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Hours"
+                      value={hours}
+                      onChange={(e) => {
+                        const inputValue = e.target.value
+                        const hoursValue = parseInt(inputValue)
+                        if (hoursValue < 0) {
+                          setHours('')
+                        } else {
+                          setHours(hoursValue)
+                        }
+                      }}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <input
+                      type="number"
+                      className="form-control"
+                      placeholder="Minutes"
+                      value={minutes}
+                      onChange={(e) => {
+                        const inputValue = e.target.value
+                        const minutesValue = parseInt(inputValue)
+                        if (minutesValue < 0 || minutesValue > 59) {
+                          setMinutes('')
+                        } else {
+                          setMinutes(minutesValue)
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12 form-group mb-3">
-              <label className="col-form-label">Description</label>
-              <textarea
-                className="form-control"
-                name="message"
-                id="message"
-                cols="30"
-                rows="4"
-                placeholder="Task description"
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-              ></textarea>
+            <div className="row">
+              <div className="col-md-12 form-group mb-3">
+                <label className="col-form-label">Description</label>
+                <textarea
+                  className="form-control"
+                  name="message"
+                  id="message"
+                  cols="30"
+                  rows="4"
+                  placeholder="Task description"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                ></textarea>
+              </div>
             </div>
+          </form>
+          <div className={styles.buttonContainer}>
+            <button
+              className="btn btn-primary btn-lg"
+              onClick={handleSubmit}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              ) : (
+                'Add Task'
+              )}
+            </button>
           </div>
-        </form>
-        <div className={styles.buttonContainer}>
-          <button
-            className="btn btn-primary btn-lg"
-            onClick={handleSubmit}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <span
-                className="spinner-border spinner-border-sm"
-                role="status"
-                aria-hidden="true"
-              ></span>
-            ) : (
-              'Add Task'
-            )}
-          </button>
         </div>
       </div>
-    </div>
+    </>
   )
 }
 
