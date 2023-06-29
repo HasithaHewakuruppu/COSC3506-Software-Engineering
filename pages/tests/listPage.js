@@ -1,14 +1,16 @@
 import List from '../../components/List'
 import useSWR from 'swr'
+import formatDate from '../../utils/formatDate'
 import { API_ENDPOINTS } from '../../utils/routes'
 
-const ListPage = () => {
-  const fetcher = (url) => fetch(url).then((res) => res.json())
-  const {
-    data: items,
-    error,
-    mutate: mutateListForToday,
-  } = useSWR(API_ENDPOINTS.GET_TODOS_FOR_TODAY, fetcher)
+function ListPage({ listDate }) {
+  const fetcher = async function (url) {
+    return fetch(url).then((res) => res.json())
+  }
+
+  const url = API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
+
+  const { data: items, error } = useSWR(url, fetcher)
 
   if (error) {
     console.error('Error fetching todos:', error)
@@ -16,7 +18,7 @@ const ListPage = () => {
 
   return (
     <div>
-      <List items={items} mutateListForToday={mutateListForToday} />
+      <List items={items} date={listDate} />
     </div>
   )
 }

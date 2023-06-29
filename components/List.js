@@ -1,25 +1,10 @@
-import React, { useState } from 'react'
-import Modal from 'react-modal'
-import AddItemForm from './AddItemForm'
 import ListItem from './ListItem'
 import styles from '../styles/List.module.css'
 import Spinner from './Spinner'
-import { motion } from 'framer-motion'
 import { randomId } from '../utils/randomId'
 
-Modal.setAppElement('#__next')
-
-export default function List({ items, mutateListForToday }) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const currentDate = new Date().toLocaleDateString('en-GB')
-
-  function openModal() {
-    setIsModalOpen(true)
-  }
-
-  function closeModal() {
-    setIsModalOpen(false)
-  }
+export default function List({ items, date }) {
+  const listDate = date.toLocaleDateString('en-GB')
 
   const formatDuration = (duration) => {
     const hours = Math.floor(duration / (60 * 60 * 1000))
@@ -53,7 +38,7 @@ export default function List({ items, mutateListForToday }) {
             )}
             <p className={styles.content}>Task Lists:</p>
           </div>
-          <p className={styles.currentDate}>{currentDate}</p>
+          <p className={styles.currentDate}>{listDate}</p>
         </div>
       </div>
       <div className={styles.listContainer}>
@@ -69,43 +54,6 @@ export default function List({ items, mutateListForToday }) {
             />
           ))}
       </div>
-      <div className={styles.lowerSubContainer}>
-        <button
-          className={`${styles.button} btn btn-primary`}
-          onClick={openModal}
-        >
-          <p className={styles.content}>Add Task</p>
-        </button>
-      </div>
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={closeModal}
-        contentLabel="Add Task Modal"
-        transparent={true}
-        style={{
-          content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            borderRadius: '10px',
-            padding: 0,
-          },
-        }}
-      >
-        <motion.div
-          animate={{ scale: 0.9, opacity: 1 }}
-          initial={{ scale: 0, opacity: 0 }}
-          exit={{ scale: 0, opacity: 0 }}
-        >
-          <AddItemForm
-            closeModal={closeModal}
-            mutateListForToday={mutateListForToday}
-          />
-        </motion.div>
-      </Modal>
     </div>
   )
 }

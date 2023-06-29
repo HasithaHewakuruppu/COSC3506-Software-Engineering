@@ -1,52 +1,29 @@
 .navbar {
-  height: 60px; /* Adjust the height as per your requirement */
-  background-color: #f8f8f8; /* Set the background color of the navbar */
-  /* Add any other styles you want for the navbar */
+  height: 60px;
+  background-color: #55acee;
 }
 
 .container {
   display: grid;
-  grid-template-columns: 1.2fr 1fr; /* Divide the container into two equal columns */
-  height: calc(
-    100vh - 60px
-  ); /* Adjust the height to leave space for the navbar */
+  height: calc(100vh - 60px);
 }
 
 .left {
   background-color: #3b5998;
-  /* Set the background color of the left side */
-  /* Add any other styles you want for the left side */
-}
-
-.right {
-  display: grid;
-  grid-template-rows: 1fr 1fr; /* Divide the right side into a top and bottom section */
-  /* Add any other styles you want for the right side */
-}
-
-.top {
-  background-color: #00ff04; /* Set the background color of the top section */
-  /* Add any other styles you want for the top section */
-}
-
-.bottom {
-  background-color: #727dfa; /* Set the background color of the bottom section */
-  /* Add any other styles you want for the bottom section */
-}
-
-.fullHeight {
-  height: 100%;
 }
 
 .navbarContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #55acee;
   color: white;
 }
 
 .logoutButton {
   margin-left: 1rem;
   margin-right: 2rem;
+}
+
+.button {
+  margin: 10px;
 }
