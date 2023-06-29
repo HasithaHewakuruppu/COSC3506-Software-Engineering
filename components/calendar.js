@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import useSWR from 'swr'
 import styles from '../styles/Calendar.module.css'
+import { API_ENDPOINTS } from '../utils/routes'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
@@ -10,7 +11,7 @@ export default function Calendar() {
   const [monthData, setMonthData] = useState([])
   const [highlightedDates, setHighlightedDates] = useState([])
   const { data: todo, error } = useSWR(
-    'http://localhost:3000/api/todos?labels=true',
+    API_ENDPOINTS.GET_TODOS_WITH_LABELS,
     fetcher
   )
 

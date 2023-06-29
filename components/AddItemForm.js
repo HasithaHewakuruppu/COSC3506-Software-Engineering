@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import SessionUser from '../components/SessionUser'
 import { toast } from 'react-hot-toast'
 import { useSWRConfig } from 'swr'
+import { API_ENDPOINTS } from '../utils/routes'
 
 function AddItemForm({ closeModal, mutateListForToday }) {
   const [title, setTitle] = useState('')
@@ -18,10 +19,7 @@ function AddItemForm({ closeModal, mutateListForToday }) {
   const { mutate } = useSWRConfig()
 
   const fetcher = (url) => fetch(url).then((res) => res.json())
-  const { data: labels, error } = useSWR(
-    'http://localhost:3000/api/labels',
-    fetcher
-  )
+  const { data: labels, error } = useSWR(API_ENDPOINTS.GET_LABELS, fetcher)
 
   if (error) {
     console.error('Error fetching labels:', error)
@@ -43,7 +41,7 @@ function AddItemForm({ closeModal, mutateListForToday }) {
       userEmail,
     }
     try {
-      const response = await fetch('http://localhost:3000/api/todos', {
+      const response = await fetch(API_ENDPOINTS.GET_TODOS, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,7 +54,7 @@ function AddItemForm({ closeModal, mutateListForToday }) {
           duration: 4000,
         })
         mutateListForToday()
-        mutate('http://localhost:3000/api/todos?labels=true')
+        mutate(API_ENDPOINTS.GET_TODOS_WITH_LABELS)
       } else {
         const error = await response.json()
         toast('Sorry, we could not add your task. ' + error.message, {
