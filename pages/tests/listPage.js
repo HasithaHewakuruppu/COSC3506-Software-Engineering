@@ -8,7 +8,9 @@ function ListPage({ listDate }) {
     return fetch(url).then((res) => res.json())
   }
 
-  const url = API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
+  const url = listDate
+    ? API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
+    : API_ENDPOINTS.GET_TODOS_WITH_LABELS
 
   const { data: items, error } = useSWR(url, fetcher)
 
@@ -16,9 +18,15 @@ function ListPage({ listDate }) {
     console.error('Error fetching todos:', error)
   }
 
+  if (items) {
+    items.sort(function (a, b) {
+      return new Date(a.date) - new Date(b.date)
+    })
+  }
+
   return (
     <div>
-      <List items={items} date={listDate} />
+      <List items={items} />
     </div>
   )
 }

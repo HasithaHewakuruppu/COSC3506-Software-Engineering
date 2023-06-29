@@ -17,7 +17,7 @@ Modal.setAppElement('#__next')
 
 export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
   const [loggingOut, setLoggingOut] = useState(false)
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false)
 

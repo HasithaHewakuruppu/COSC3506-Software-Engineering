@@ -11,6 +11,7 @@ function ListItem(props) {
 
   let categoryColor = ''
   let labelColor = ''
+  const date = new Date(props.date)
 
   switch (props.category) {
     case 'LEISURE':
@@ -42,7 +43,13 @@ function ListItem(props) {
             <p className={styles.pEdit}>{props.label}</p>
           </div>
           <p className={styles.listItem}>{props.title}</p>
-          <p className={styles.pEdit}>{props.duration}</p>
+          <p
+            className={`${styles.pEdit} ${
+              props.overdue ? styles.overdueDate : ''
+            }`}
+          >
+            {date.toLocaleDateString('en-GB')}
+          </p>
           <div className={styles.favicons}>
             <i
               className={`fa ${expanded ? 'fa-caret-up' : 'fa-caret-down'}`}
@@ -53,6 +60,7 @@ function ListItem(props) {
         {expanded && (
           <div className={styles.expandedContainer}>
             <p className={styles.description}>{props.description}</p>
+            <p className={styles.duration}>{props.duration}</p>
             <div className={styles.favicons}>
               <i className={`${styles.editIcon} fa fa-edit`}></i>
               <i className={`${styles.trashIcon} fa fa-trash`}></i>

@@ -3,8 +3,9 @@ import styles from '../styles/List.module.css'
 import Spinner from './Spinner'
 import { randomId } from '../utils/randomId'
 
-export default function List({ items, date }) {
-  const listDate = date.toLocaleDateString('en-GB')
+export default function List({ items }) {
+  const currentDate = new Date()
+  currentDate.setHours(0, 0, 0, 0)
 
   const formatDuration = (duration) => {
     const hours = Math.floor(duration / (60 * 60 * 1000))
@@ -38,7 +39,7 @@ export default function List({ items, date }) {
             )}
             <p className={styles.content}>Task Lists:</p>
           </div>
-          <p className={styles.currentDate}>{listDate}</p>
+          {/* <p className={styles.currentDate}>{listDate}</p> */}
         </div>
       </div>
       <div className={styles.listContainer}>
@@ -51,6 +52,8 @@ export default function List({ items, date }) {
               description={item.description}
               category={item.label.category}
               label={item.label.name}
+              date={item.date}
+              overdue={new Date(item.date) < currentDate}
             />
           ))}
       </div>
