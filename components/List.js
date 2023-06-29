@@ -5,10 +5,11 @@ import ListItem from './ListItem'
 import styles from '../styles/List.module.css'
 import Spinner from './Spinner'
 import { motion } from 'framer-motion'
+import { randomId } from '../utils/randomId'
 
 Modal.setAppElement('#__next')
 
-export default function List({ items, apiUrl }) {
+export default function List({ items, mutateListForToday }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const currentDate = new Date().toLocaleDateString('en-GB')
 
@@ -59,7 +60,7 @@ export default function List({ items, apiUrl }) {
         {items &&
           items.map((item) => (
             <ListItem
-              key={item.title}
+              key={randomId(20)}
               title={item.title}
               duration={formatDuration(item.duration)}
               description={item.description}
@@ -99,7 +100,10 @@ export default function List({ items, apiUrl }) {
           initial={{ scale: 0, opacity: 0 }}
           exit={{ scale: 0, opacity: 0 }}
         >
-          <AddItemForm closeModal={closeModal} apiUrl={apiUrl} />
+          <AddItemForm
+            closeModal={closeModal}
+            mutateListForToday={mutateListForToday}
+          />
         </motion.div>
       </Modal>
     </div>

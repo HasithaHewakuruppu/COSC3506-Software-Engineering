@@ -7,7 +7,7 @@ import SessionUser from '../components/SessionUser'
 import { toast } from 'react-hot-toast'
 import { useSWRConfig } from 'swr'
 
-function AddItemForm({ closeModal, apiUrl }) {
+function AddItemForm({ closeModal, mutateListForToday }) {
   const [title, setTitle] = useState('')
   const [hours, setHours] = useState('')
   const [minutes, setMinutes] = useState('')
@@ -55,7 +55,8 @@ function AddItemForm({ closeModal, apiUrl }) {
         toast('Task Added!', {
           duration: 4000,
         })
-        mutate(apiUrl)
+        mutateListForToday()
+        mutate('http://localhost:3000/api/todos?labels=true')
       } else {
         const error = await response.json()
         toast('Sorry, we could not add your task. ' + error.message, {
@@ -85,7 +86,7 @@ function AddItemForm({ closeModal, apiUrl }) {
   return (
     <div className={styles.modalContainer}>
       <div className={styles.container}>
-        <h3 className="text-center">Let's Add Your Task!</h3>
+        <h3 className="text-center">Let&apos;s Add Your Task!</h3>
         <form
           className={styles.formContainer}
           id="contactForm"

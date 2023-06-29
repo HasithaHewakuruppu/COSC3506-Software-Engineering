@@ -14,7 +14,11 @@ const ListPage = () => {
   const apiUrl = `http://localhost:3000/api/todos?labels=true&date=${formattedDate}`
 
   const fetcher = (url) => fetch(url).then((res) => res.json())
-  const { data: items, error } = useSWR(apiUrl, fetcher)
+  const {
+    data: items,
+    error,
+    mutate: mutateListForToday,
+  } = useSWR(apiUrl, fetcher)
 
   if (error) {
     console.error('Error fetching todos:', error)
@@ -22,7 +26,7 @@ const ListPage = () => {
 
   return (
     <div>
-      <List items={items} apiUrl={apiUrl} />
+      <List items={items} mutateListForToday={mutateListForToday} />
     </div>
   )
 }
