@@ -60,10 +60,14 @@ function ListItem(props) {
         {expanded && (
           <div className={styles.expandedContainer}>
             <p className={styles.description}>{props.description}</p>
-            <p className={styles.duration}>{props.duration}</p>
-            <div className={styles.favicons}>
-              <i className={`${styles.editIcon} fa fa-edit`}></i>
-              <i className={`${styles.trashIcon} fa fa-trash`}></i>
+            <div className={styles.unexpandedContainer}>
+              <p className={`${styles.pEdit} ${styles.duration}`}>
+                {props.duration}
+              </p>
+              <div className={styles.favicons}>
+                <i className={`${styles.editIcon} fa fa-edit`}></i>
+                <i className={`${styles.trashIcon} fa fa-trash`}></i>
+              </div>
             </div>
           </div>
         )}

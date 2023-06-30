@@ -26,7 +26,7 @@ export default function List({ items }) {
   }
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <div className={styles.upperSubContainer}>
         <div className={styles.headingContainer}>
           <div className={styles.faviconContainer}>
