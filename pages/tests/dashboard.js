@@ -62,7 +62,9 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
     <>
       <nav className={styles.navbar}>
         <div className={styles.navbarContent}>
-          <h1>The Navbar goes here</h1>
+          <div className={`${styles.heading}`}>
+            <h1>The Navbar</h1>
+          </div>
           <div className={`${styles.logoutButton}`}>
             {loggingOut ? (
               <PulseLoader color="#0d6efd" />
@@ -93,9 +95,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
       </nav>
 
       <div className={styles.container}>
-        <div className={styles.left}>
-          <ListPage listDate={selectedDate} />
-        </div>
+        <ListPage listDate={selectedDate} />
       </div>
 
       <Modal

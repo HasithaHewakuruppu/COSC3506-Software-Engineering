@@ -4,11 +4,8 @@
 }
 
 .container {
-  display: grid;
-  height: calc(100vh - 60px);
-}
-
-.left {
+  max-height: calc(100% - 60px);
+  overflow-y: auto;
   background-color: #3b5998;
 }
 
@@ -20,10 +17,15 @@
 }
 
 .logoutButton {
-  margin-left: 1rem;
-  margin-right: 2rem;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .button {
   margin: 10px;
+}
+
+.heading {
+  margin-left: 10px;
+  margin-right: 10px;
 }
