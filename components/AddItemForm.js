@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast'
 import { useSWRConfig } from 'swr'
 import { API_ENDPOINTS } from '../utils/routes'
 
-function AddItemForm({ closeModal, mutateListForToday }) {
+function AddItemForm({ closeModal }) {
   const [title, setTitle] = useState('')
   const [hours, setHours] = useState('')
   const [minutes, setMinutes] = useState('')
@@ -53,7 +53,7 @@ function AddItemForm({ closeModal, mutateListForToday }) {
         toast('Task Added!', {
           duration: 4000,
         })
-        mutateListForToday()
+        mutate(API_ENDPOINTS.GET_TODOS_FOR_TODAY)
         mutate(API_ENDPOINTS.GET_TODOS_WITH_LABELS)
       } else {
         const error = await response.json()
@@ -61,8 +61,6 @@ function AddItemForm({ closeModal, mutateListForToday }) {
           duration: 4000,
         })
       }
-
-      closeModal()
     } catch (error) {
       toast('Sorry, we could not add your task. ', {
         duration: 4000,

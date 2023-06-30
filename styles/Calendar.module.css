@@ -5,6 +5,7 @@
 }
 
 .elegant-calencar {
+  border-radius: 10px;
   max-width: 700px;
   text-align: center;
   position: relative;

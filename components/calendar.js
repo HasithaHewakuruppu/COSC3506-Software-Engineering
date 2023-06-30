@@ -5,7 +5,7 @@ import { API_ENDPOINTS } from '../utils/routes'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-export default function Calendar() {
+export default function Calendar({ closeModal, setListSelectedDate }) {
   const today = new Date()
   const [selectedDate, setSelectedDate] = useState(today)
   const [monthData, setMonthData] = useState([])
@@ -89,10 +89,8 @@ export default function Calendar() {
       day
     )
     setSelectedDate(newDate)
-  }
-
-  function handleClick() {
-    // This is the function that will be called when the user clicks on the date  <-------------------
+    setListSelectedDate(newDate)
+    closeModal()
   }
 
   useEffect(() => {
@@ -167,11 +165,7 @@ export default function Calendar() {
                     return (
                       <td
                         key={dayIndex}
-                        onClick={() =>
-                          isCurrentMonthDay &&
-                          selectDate(day) &&
-                          handleClick(day)
-                        }
+                        onClick={() => isCurrentMonthDay && selectDate(day)}
                         className={`${
                           isCurrentMonthDay ? cellClass : ''
                         } ${disabledClass}`}

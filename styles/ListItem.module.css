@@ -103,3 +103,12 @@
   color: green;
   transform: scale(1.5);
 }
+
+.overdueDate {
+  color: red;
+  font-weight: bold;
+}
+
+.duration {
+  font-weight: 500;
+}
