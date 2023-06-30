@@ -1,10 +1,11 @@
-import { Star, Calendar } from 'lucide-react'
+import { format } from 'date-fns'
+import { Star, CalendarDays } from 'lucide-react'
 import ListItem from './ListItem'
 import styles from '../styles/List.module.css'
 import Spinner from './Spinner'
 import { randomId } from '../utils/randomId'
 
-export default function List({ todos, isTodoListLoading, isToday }) {
+export default function List({ todos, isTodoListLoading, isToday, listDate }) {
   const currentDate = new Date()
   currentDate.setHours(0, 0, 0, 0)
 
@@ -47,7 +48,7 @@ export default function List({ todos, isTodoListLoading, isToday }) {
         {isToday ? (
           <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
         ) : (
-          <Calendar size={40} strokeWidth={0.75} />
+          <CalendarDays size={40} strokeWidth={0.75} fill="#e7e5e4" />
         )}
         <h1
           style={{
@@ -55,7 +56,9 @@ export default function List({ todos, isTodoListLoading, isToday }) {
             margin: 0,
           }}
         >
-          {isToday ? "Today's Todos" : 'Todos for ...'}
+          {isToday
+            ? "Today's Todos"
+            : 'Todos for ' + format(listDate, 'cccc MMMM do')}
         </h1>
       </div>
       <div className={styles.listContainer}>
