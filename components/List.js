@@ -3,7 +3,7 @@ import styles from '../styles/List.module.css'
 import Spinner from './Spinner'
 import { randomId } from '../utils/randomId'
 
-export default function List({ items }) {
+export default function List({ todos, isTodoListLoading }) {
   const currentDate = new Date()
   currentDate.setHours(0, 0, 0, 0)
 
@@ -25,12 +25,27 @@ export default function List({ items }) {
     return formattedDuration
   }
 
+  if (isTodoListLoading) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItemms: 'center',
+          minHeight: 'calc(100vh - 60px)',
+        }}
+      >
+        <Spinner />
+      </div>
+    )
+  }
+
   return (
-    <div className={styles.mainContainer}>
+    <div>
       <div className={styles.upperSubContainer}>
         <div className={styles.headingContainer}>
           <div className={styles.faviconContainer}>
-            {items ? (
+            {todos ? (
               <i className={`fa fa-list ${styles.favIcon}`}></i>
             ) : (
               <div className={styles.spinner}>
@@ -43,8 +58,8 @@ export default function List({ items }) {
         </div>
       </div>
       <div className={styles.listContainer}>
-        {items &&
-          items.map((item) => (
+        {todos &&
+          todos.map((item) => (
             <ListItem
               key={randomId(20)}
               title={item.title}

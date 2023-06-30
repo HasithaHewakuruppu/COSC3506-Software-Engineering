@@ -12,21 +12,25 @@ function ListPage({ listDate }) {
     ? API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
     : API_ENDPOINTS.GET_TODOS_WITH_LABELS
 
-  const { data: items, error } = useSWR(url, fetcher)
+  const {
+    data: todos,
+    error,
+    isLoading: isTodoListLoading,
+  } = useSWR(url, fetcher)
 
   if (error) {
     console.error('Error fetching todos:', error)
   }
 
-  if (items) {
-    items.sort(function (a, b) {
+  if (todos) {
+    todos.sort(function (a, b) {
       return new Date(a.date) - new Date(b.date)
     })
   }
 
   return (
     <div>
-      <List items={items} />
+      <List todos={todos} isTodoListLoading={isTodoListLoading} />
     </div>
   )
 }
