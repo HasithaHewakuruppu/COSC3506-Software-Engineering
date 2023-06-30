@@ -6,7 +6,6 @@
 .container {
   max-height: calc(100% - 60px);
   overflow-y: auto;
-  background-color: #3b5998;
 }
 
 .navbarContent {

@@ -37,8 +37,12 @@ function ListItem(props) {
       initial={{ position: 'relative', left: '-100px', opacity: 0 }}
     >
       <div className={`${styles.itemContainer} ${categoryColor}`}>
-        <div className={styles.unexpandedContainer}>
-          <input type="checkbox" className={styles.checkbox} />
+        <div className={styles.unexpandedContainer} onClick={handleExpand}>
+          <input
+            type="checkbox"
+            className={styles.checkbox}
+            onClick={(e) => e.stopPropagation()}
+          />
           <div className={`${styles.label} ${labelColor}`}>
             <p className={styles.pEdit}>{props.label}</p>
           </div>
@@ -51,16 +55,13 @@ function ListItem(props) {
             {date.toLocaleDateString('en-GB')}
           </p>
           <div className={styles.favicons}>
-            <i
-              className={`fa ${expanded ? 'fa-caret-up' : 'fa-caret-down'}`}
-              onClick={handleExpand}
-            />
+            <i className={`fa ${expanded ? 'fa-caret-up' : 'fa-caret-down'}`} />
           </div>
         </div>
         {expanded && (
           <div className={styles.expandedContainer}>
             <p className={styles.description}>{props.description}</p>
-            <div className={styles.unexpandedContainer}>
+            <div className={styles.todoBottomBarWrapper}>
               <p className={`${styles.pEdit} ${styles.duration}`}>
                 {props.duration}
               </p>

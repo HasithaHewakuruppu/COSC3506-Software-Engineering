@@ -1,9 +1,15 @@
-import ListItem from './ListItem'
+import { format, isBefore, isSameDay } from 'date-fns'
+import { CalendarCheck, CalendarDays, Star } from 'lucide-react'
+import { useState } from 'react'
 import styles from '../styles/List.module.css'
-import Spinner from './Spinner'
 import { randomId } from '../utils/randomId'
+import ListItem from './ListItem'
+import Spinner from './Spinner'
+import { AnimatePresence, motion } from 'framer-motion'
 
-export default function List({ items }) {
+export default function List({ todos, isTodoListLoading, isToday, listDate }) {
+  const [isOverdueBannerDismissed, setIsOverdueBannerDismissed] =
+    useState(false)
   const currentDate = new Date()
   currentDate.setHours(0, 0, 0, 0)
 
@@ -25,26 +31,39 @@ export default function List({ items }) {
     return formattedDuration
   }
 
-  return (
-    <div className={styles.mainContainer}>
-      <div className={styles.upperSubContainer}>
-        <div className={styles.headingContainer}>
-          <div className={styles.faviconContainer}>
-            {items ? (
-              <i className={`fa fa-list ${styles.favIcon}`}></i>
-            ) : (
-              <div className={styles.spinner}>
-                <Spinner />
-              </div>
-            )}
-            <p className={styles.content}>Task Lists:</p>
-          </div>
-          {/* <p className={styles.currentDate}>{listDate}</p> */}
-        </div>
+  if (isTodoListLoading) {
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItemms: 'center',
+          minHeight: 'calc(100vh - 60px)',
+        }}
+      >
+        <Spinner />
       </div>
+    )
+  }
+
+  return (
+    <div>
+      <div className={styles.headingContainer}>
+        <ListHeader listDate={listDate} isToday={isToday} />
+      </div>
+      <AnimatePresence>
+        {!isOverdueBannerDismissed && (
+          <OverdueTodosBanner
+            todos={todos}
+            hideOverdueTodos={Boolean(listDate)}
+            setIsOverdueBannerDismissed={setIsOverdueBannerDismissed}
+            isOverdueBannerDismissed={isOverdueBannerDismissed}
+          />
+        )}
+      </AnimatePresence>
       <div className={styles.listContainer}>
-        {items &&
-          items.map((item) => (
+        {todos &&
+          todos.map((item) => (
             <ListItem
               key={randomId(20)}
               title={item.title}
@@ -58,5 +77,79 @@ export default function List({ items }) {
           ))}
       </div>
     </div>
+  )
+}
+
+function OverdueTodosBanner({ todos, setIsOverdueBannerDismissed }) {
+  const countOverdueTodos = todos.filter(
+    (t) =>
+      isBefore(new Date(t.date), new Date()) &&
+      !isSameDay(new Date(t.date), new Date())
+  ).length
+
+  if (countOverdueTodos === 0) {
+    return null
+  }
+
+  return (
+    <motion.div initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <div className={styles.overdueTodosBannerWrapepr}>
+        <h3 className={styles.overdueTodosTitle}>
+          ~ Gentle reminder you have {countOverdueTodos} todos that need your
+          attenion ~
+        </h3>
+        <button
+          className={styles.overdueTodosOkButton}
+          onClick={() => setIsOverdueBannerDismissed(true)}
+        >
+          OK
+        </button>
+      </div>
+    </motion.div>
+  )
+}
+
+function ListHeader({ isToday, listDate }) {
+  if (isToday) {
+    return (
+      <>
+        <CalendarCheck size={40} strokeWidth={0.75} fill="#f2f2f2" />
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          Today&apos;s Todos
+        </h1>
+      </>
+    )
+  } else if (!listDate) {
+    return (
+      <>
+        <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          All My Todos
+        </h1>
+      </>
+    )
+  }
+  return (
+    <>
+      <CalendarDays size={40} strokeWidth={0.75} fill="#f2f2f2" />
+      <h1
+        style={{
+          fontSize: '1.8rem',
+          margin: 0,
+        }}
+      >
+        {'Todos for ' + format(listDate, 'cccc MMMM do')}
+      </h1>
+    </>
   )
 }

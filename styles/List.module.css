@@ -3,12 +3,6 @@
   overflow-y: auto;
 }
 
-.upperSubContainer {
-  background-color: #f2f2f2;
-  border: 1px solid #ccc;
-  height: 60px;
-}
-
 .lowerSubContainer {
   background-color: #f2f2f2;
   border: 1px solid #ccc;
@@ -21,15 +15,12 @@
   margin: 10px;
 }
 
-.content {
-  margin-bottom: 0px;
-}
-
 .headingContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  margin: 10px;
+  gap: 10px;
+  margin: 20px 10px;
 }
 
 .heading {
@@ -42,17 +33,32 @@
   font-weight: 600;
 }
 
-.faviconContainer {
+.overdueTodosBannerWrapepr {
+  background: #fecaca;
+  border-radius: 4px;
+  margin: 10px;
+  padding: 0 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px;
 }
 
-.favIcon {
-  margin-right: 10px;
+.overdueTodosTitle {
+  color: #57534e;
+  font-weight: 400;
+  font-size: 1rem;
+  margin: 0;
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
-.spinner {
-  margin: 10px;
+.overdueTodosOkButton {
+  background: #ef4444;
+  margin: 10px; 
+  color: white;
+  border: none;
+  border-radius: 4px;
+  min-width: 50px;
+  min-height: 30px;
 }
