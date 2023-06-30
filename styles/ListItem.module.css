@@ -13,6 +13,11 @@
   align-items: center;
 }
 
+.todoBottomBarWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .unexpandedContainer:hover {
   cursor: pointer;
 }

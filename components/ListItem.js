@@ -61,7 +61,7 @@ function ListItem(props) {
         {expanded && (
           <div className={styles.expandedContainer}>
             <p className={styles.description}>{props.description}</p>
-            <div className={styles.unexpandedContainer}>
+            <div className={styles.todoBottomBarWrapper}>
               <p className={`${styles.pEdit} ${styles.duration}`}>
                 {props.duration}
               </p>
