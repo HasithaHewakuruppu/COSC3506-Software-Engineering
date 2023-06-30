@@ -1,9 +1,10 @@
+import { Star, Calendar } from 'lucide-react'
 import ListItem from './ListItem'
 import styles from '../styles/List.module.css'
 import Spinner from './Spinner'
 import { randomId } from '../utils/randomId'
 
-export default function List({ todos, isTodoListLoading }) {
+export default function List({ todos, isTodoListLoading, isToday }) {
   const currentDate = new Date()
   currentDate.setHours(0, 0, 0, 0)
 
@@ -42,20 +43,20 @@ export default function List({ todos, isTodoListLoading }) {
 
   return (
     <div>
-      <div className={styles.upperSubContainer}>
-        <div className={styles.headingContainer}>
-          <div className={styles.faviconContainer}>
-            {todos ? (
-              <i className={`fa fa-list ${styles.favIcon}`}></i>
-            ) : (
-              <div className={styles.spinner}>
-                <Spinner />
-              </div>
-            )}
-            <p className={styles.content}>Task Lists:</p>
-          </div>
-          {/* <p className={styles.currentDate}>{listDate}</p> */}
-        </div>
+      <div className={styles.headingContainer}>
+        {isToday ? (
+          <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
+        ) : (
+          <Calendar size={40} strokeWidth={0.75} />
+        )}
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          {isToday ? "Today's Todos" : 'Todos for ...'}
+        </h1>
       </div>
       <div className={styles.listContainer}>
         {todos &&

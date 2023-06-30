@@ -3,12 +3,6 @@
   overflow-y: auto;
 }
 
-.upperSubContainer {
-  background-color: #f2f2f2;
-  border: 1px solid #ccc;
-  height: 60px;
-}
-
 .lowerSubContainer {
   background-color: #f2f2f2;
   border: 1px solid #ccc;
@@ -21,15 +15,12 @@
   margin: 10px;
 }
 
-.content {
-  margin-bottom: 0px;
-}
-
 .headingContainer {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
-  margin: 10px;
+  gap: 10px;
+  margin: 20px 10px;
 }
 
 .heading {
@@ -40,19 +31,4 @@
 .currentDate {
   margin: 10px;
   font-weight: 600;
-}
-
-.faviconContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px;
-}
-
-.favIcon {
-  margin-right: 10px;
-}
-
-.spinner {
-  margin: 10px;
 }

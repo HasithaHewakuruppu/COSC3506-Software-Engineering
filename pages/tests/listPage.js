@@ -1,5 +1,6 @@
-import List from '../../components/List'
+import { isToday as isTodayDateFns } from 'date-fns'
 import useSWR from 'swr'
+import List from '../../components/List'
 import formatDate from '../../utils/formatDate'
 import { API_ENDPOINTS } from '../../utils/routes'
 
@@ -11,6 +12,8 @@ function ListPage({ listDate }) {
   const url = listDate
     ? API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
     : API_ENDPOINTS.GET_TODOS_WITH_LABELS
+
+  const isToday = isTodayDateFns(listDate) || !listDate
 
   const {
     data: todos,
@@ -30,7 +33,12 @@ function ListPage({ listDate }) {
 
   return (
     <div>
-      <List todos={todos} isTodoListLoading={isTodoListLoading} />
+      <List
+        todos={todos}
+        isTodoListLoading={isTodoListLoading}
+        isToday={isToday}
+        listDate={listDate}
+      />
     </div>
   )
 }
