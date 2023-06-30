@@ -11,9 +11,9 @@ function ListPage({ listDate }) {
 
   const url = listDate
     ? API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
-    : API_ENDPOINTS.GET_TODOS_WITH_LABELS
+    : API_ENDPOINTS.GET_TODOS_WITH_LABELS // by default will grab all todos
 
-  const isToday = isTodayDateFns(listDate) || !listDate
+  const isToday = isTodayDateFns(listDate)
 
   const {
     data: todos,

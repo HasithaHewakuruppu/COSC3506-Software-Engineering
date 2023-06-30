@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-import { Star, CalendarDays } from 'lucide-react'
+import { Star, CalendarDays, CalendarCheck } from 'lucide-react'
 import ListItem from './ListItem'
 import styles from '../styles/List.module.css'
 import Spinner from './Spinner'
@@ -45,21 +45,7 @@ export default function List({ todos, isTodoListLoading, isToday, listDate }) {
   return (
     <div>
       <div className={styles.headingContainer}>
-        {isToday ? (
-          <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
-        ) : (
-          <CalendarDays size={40} strokeWidth={0.75} fill="#e7e5e4" />
-        )}
-        <h1
-          style={{
-            fontSize: '1.8rem',
-            margin: 0,
-          }}
-        >
-          {isToday
-            ? "Today's Todos"
-            : 'Todos for ' + format(listDate, 'cccc MMMM do')}
-        </h1>
+        <ListHeader listDate={listDate} isToday={isToday} />
       </div>
       <div className={styles.listContainer}>
         {todos &&
@@ -77,5 +63,50 @@ export default function List({ todos, isTodoListLoading, isToday, listDate }) {
           ))}
       </div>
     </div>
+  )
+}
+
+function ListHeader({ isToday, listDate }) {
+  if (isToday) {
+    return (
+      <>
+        <CalendarCheck size={40} strokeWidth={0.75} fill="#f2f2f2" />
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          Today&apos;s Todos
+        </h1>
+      </>
+    )
+  } else if (!listDate) {
+    return (
+      <>
+        <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          All My Todos
+        </h1>
+      </>
+    )
+  }
+  return (
+    <>
+      <CalendarDays size={40} strokeWidth={0.75} fill="#f2f2f2" />
+      <h1
+        style={{
+          fontSize: '1.8rem',
+          margin: 0,
+        }}
+      >
+        {'Todos for ' + format(listDate, 'cccc MMMM do')}
+      </h1>
+    </>
   )
 }
