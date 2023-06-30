@@ -63,7 +63,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
       <nav className={styles.navbar}>
         <div className={styles.navbarContent}>
           <div className={`${styles.heading}`}>
-            <h1>Harmony Hub</h1>
+            <h1>The Navbar</h1>
           </div>
           <div className={`${styles.logoutButton}`}>
             {loggingOut ? (
