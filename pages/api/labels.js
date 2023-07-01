@@ -46,7 +46,8 @@ export default async function label(req, res) {
           userEmail: session.user.email,
         },
       })
-      return res.status(200).send(JSON.stringify(labels))
+      console.log(labels)
+      return res.status(200).json(labels)
     } catch (e) {
       console.error(e)
       return res.status(500).send('Internal server error')
