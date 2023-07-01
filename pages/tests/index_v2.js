@@ -43,7 +43,8 @@ export default function HomePage() {
                   className={`${styles.socialLogin} ${styles.google} btn btn-primary btn-md form-control-sm `}
                   onClick={handleGoogleAuth}
                 >
-                  <i className="fab fa-google me-2"></i>&nbsp;&nbsp;Google
+                  <i className="fab fa-google me-2"></i>
+                  &nbsp;&nbsp;Google
                 </button>
 
                 <button
@@ -51,7 +52,8 @@ export default function HomePage() {
                   className={`${styles.socialLogin} ${styles.github} btn btn-primary btn-md form-control-sm `}
                   onClick={handleGitHubAuth}
                 >
-                  <i className="fab fa-github me-2"></i>&nbsp;&nbsp;GitHub
+                  <i className="fab fa-github me-2"></i>
+                  &nbsp;&nbsp;GitHub
                 </button>
 
                 <button
@@ -59,7 +61,8 @@ export default function HomePage() {
                   className={`${styles.socialLogin} ${styles.discord} btn btn-primary btn-md form-control-sm `}
                   onClick={handleDiscordAuth}
                 >
-                  <i className="fab fa-discord me-2"></i>&nbsp;&nbsp;Discord
+                  <i className="fab fa-discord me-2"></i>
+                  &nbsp;&nbsp;Discord
                 </button>
               </div>
 

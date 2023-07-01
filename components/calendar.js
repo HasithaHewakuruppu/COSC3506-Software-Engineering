@@ -119,9 +119,13 @@ export default function Calendar({ closeModal, setListSelectedDate }) {
             <div className={styles['head-info']}>
               <div className={styles['head-day']}>{selectedDate.getDate()}</div>
               <div className={styles['head-month']}>
-                {selectedDate.toLocaleString('en-US', { month: 'long' })}
+                {selectedDate.toLocaleString('en-US', {
+                  month: 'long',
+                })}
                 {' - '}
-                {selectedDate.toLocaleString('en-US', { year: 'numeric' })}
+                {selectedDate.toLocaleString('en-US', {
+                  year: 'numeric',
+                })}
               </div>
             </div>
             <div

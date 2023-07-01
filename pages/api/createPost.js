@@ -38,9 +38,9 @@ export default async function createPost(req, res) {
         ' posts in the database'
     )
 
-    res
-      .status(200)
-      .json({ data: 'Yaayyyy there should be a new database record' })
+    res.status(200).json({
+      data: 'Yaayyyy there should be a new database record',
+    })
   } else {
     res.status(404).send('Not found')
   }

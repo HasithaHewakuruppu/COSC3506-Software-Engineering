@@ -116,9 +116,18 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
         }}
       >
         <motion.div
-          animate={{ scale: 0.9, opacity: 1 }}
-          initial={{ scale: 0, opacity: 0 }}
-          exit={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: 0.9,
+            opacity: 1,
+          }}
+          initial={{
+            scale: 0,
+            opacity: 0,
+          }}
+          exit={{
+            scale: 0,
+            opacity: 0,
+          }}
         >
           <AddItemForm closeModal={closeModal} />
         </motion.div>
@@ -144,9 +153,18 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
         }}
       >
         <motion.div
-          animate={{ scale: 0.9, opacity: 1 }}
-          initial={{ scale: 0, opacity: 0 }}
-          exit={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: 0.9,
+            opacity: 1,
+          }}
+          initial={{
+            scale: 0,
+            opacity: 0,
+          }}
+          exit={{
+            scale: 0,
+            opacity: 0,
+          }}
         >
           <Calendar
             closeModal={closeCalendarModal}

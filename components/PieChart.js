@@ -30,7 +30,11 @@ export default function PieChart() {
           labels: getLabels(),
         },
       ]}
-      layout={{ title: title, width: width, height: height }}
+      layout={{
+        title: title,
+        width: width,
+        height: height,
+      }}
       config={{ responsive: true, displaylogo: false }}
     />
   )
