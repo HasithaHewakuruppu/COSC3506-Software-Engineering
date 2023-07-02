@@ -1,6 +1,7 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from './auth/[...nextauth]'
 import { prisma } from '../../lib/db'
+import categories from '../../utils/categories'
 
 export default async function label(req, res) {
   const session = await getServerSession(req, res, authOptions)
@@ -11,9 +12,9 @@ export default async function label(req, res) {
     const isValidBody = req.body?.labels?.every(
       (label) =>
         label.name &&
-        (label.category === 'WORK' ||
-          label.category === 'LEISURE' ||
-          label.category === 'FITNESS')
+        (label.category === categories.WORK ||
+          label.category === categories.LEISURE ||
+          label.category === categories.FITNESS)
     )
     if (!isValidBody) {
       return res
@@ -21,7 +22,7 @@ export default async function label(req, res) {
         .send(
           'Bad request: ' +
             "Invalid body, it should be like {labels: [{name: '...', category: '...'}, ...]} \n" +
-            "category must be one of 'WORK', 'LEISURE', 'FITNESS'"
+            `category must be one of '${categories.WORK}', '${categories.LEISURE}', '${categories.FITNESS}'`
         )
     }
     const labels = req.body?.labels
