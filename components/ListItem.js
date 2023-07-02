@@ -1,6 +1,7 @@
 import styles from '../styles/ListItem.module.css'
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import categories from '../utils/categories'
 
 function ListItem(props) {
   const [expanded, setExpanded] = useState(false)
@@ -14,15 +15,15 @@ function ListItem(props) {
   const date = new Date(props.date)
 
   switch (props.category) {
-    case 'LEISURE':
+    case categories.LEISURE:
       categoryColor = styles.categoryLeisure
       labelColor = styles.labelLeisure
       break
-    case 'WORK':
+    case categories.WORK:
       categoryColor = styles.categoryWork
       labelColor = styles.labelWork
       break
-    case 'FITNESS':
+    case categories.FITNESS:
       categoryColor = styles.categoryFitness
       labelColor = styles.labelFitness
       break
