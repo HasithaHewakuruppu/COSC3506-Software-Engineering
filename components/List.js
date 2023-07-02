@@ -66,6 +66,7 @@ export default function List({ todos, isTodoListLoading, isToday, listDate }) {
           todos.map((item) => (
             <ListItem
               key={randomId(20)}
+              todoid={item.id} // create prop for id
               title={item.title}
               duration={formatDuration(item.duration)}
               description={item.description}

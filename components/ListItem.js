@@ -1,9 +1,12 @@
 import styles from '../styles/ListItem.module.css'
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
+import { useSWRConfig } from 'swr'
+import { API_ENDPOINTS } from '../utils/routes'
 import categories from '../utils/categories'
 
 function ListItem(props) {
+  const { mutate } = useSWRConfig()
   const [expanded, setExpanded] = useState(false)
 
   const handleExpand = () => {
@@ -34,8 +37,16 @@ function ListItem(props) {
 
   return (
     <motion.div
-      animate={{ position: 'relative', left: 0, opacity: 1 }}
-      initial={{ position: 'relative', left: '-100px', opacity: 0 }}
+      animate={{
+        position: 'relative',
+        left: 0,
+        opacity: 1,
+      }}
+      initial={{
+        position: 'relative',
+        left: '-100px',
+        opacity: 0,
+      }}
     >
       <div className={`${styles.itemContainer} ${categoryColor}`}>
         <div className={styles.unexpandedContainer} onClick={handleExpand}>
@@ -68,7 +79,12 @@ function ListItem(props) {
               </p>
               <div className={styles.favicons}>
                 <i className={`${styles.editIcon} fa fa-edit`}></i>
-                <i className={`${styles.trashIcon} fa fa-trash`}></i>
+                <i
+                  className={`${styles.trashIcon} fa fa-trash`}
+                  onClick={function wrappingFunction() {
+                    deleteTodo(props.todoid, mutate)
+                  }}
+                ></i>
               </div>
             </div>
           </div>
@@ -76,6 +92,17 @@ function ListItem(props) {
       </div>
     </motion.div>
   )
+}
+
+async function deleteTodo(todoid, mutate) {
+  try {
+    await fetch('/api/todos/' + todoid, {
+      method: 'DELETE',
+    })
+  } catch (e) {
+    console.log(e)
+  }
+  mutate(API_ENDPOINTS.GET_TODOS)
 }
 
 export default ListItem

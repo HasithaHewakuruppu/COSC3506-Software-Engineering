@@ -23,7 +23,9 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
     try {
       await fetch('/api/labels', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body,
       })
       router.push(HOME_PAGE)

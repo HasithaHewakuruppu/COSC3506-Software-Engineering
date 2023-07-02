@@ -38,7 +38,10 @@ export default function PieChart({ data }) {
         title: title,
         width: width,
         height: height,
+<<<<<<< HEAD
+=======
         colorway: getColors(getLabels()),
+>>>>>>> 9a9176aaf4652c871df967e3859d6477203bee3e
       }}
       config={{ responsive: true, displaylogo: false }}
     />
