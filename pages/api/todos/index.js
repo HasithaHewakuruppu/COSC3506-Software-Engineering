@@ -67,6 +67,7 @@ export default async function todos(req, res) {
           date: todo.date,
           labelId: todo.labelId,
           userEmail: todo.userEmail,
+          completed: false,
         },
       })
       return res.status(200).json(todo)
