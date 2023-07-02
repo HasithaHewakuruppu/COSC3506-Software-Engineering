@@ -80,6 +80,7 @@ model Label {
 
 model Todo {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  completed    Boolean  @default(false)
   title        String
   description  String
   duration     Int
