@@ -1,6 +1,6 @@
 import { getServerSession } from 'next-auth/next'
 import { authOptions } from './../auth/[...nextauth]'
-import { deleteTodoSchema } from '../../../validators/todo'
+import { deleteTodoSchema, updateTodoSchema } from '../../../validators/todo'
 import { ValidationError } from 'yup'
 import { prisma } from '../../../lib/db'
 
@@ -9,11 +9,10 @@ export default async function todos(req, res) {
   if (!session?.user?.email) {
     return res.status(401).send('Unauthorized')
   }
-
-  const todoPayload = {
-    todoId: req.query.todoId,
-  }
   if (req.method === 'DELETE') {
+    const todoPayload = {
+      todoId: req.query.todoId,
+    }
     try {
       const todo = await deleteTodoSchema.validate(todoPayload)
       const todosDeleted = await prisma.todo.deleteMany({
@@ -31,6 +30,33 @@ export default async function todos(req, res) {
         return res.status(400).send(e.message)
       }
       return res.status(500).send('Internal server error')
+    }
+  }
+  if (req.method === 'PUT') {
+    const clientPayload = {
+      title: req.body.title,
+      description: req.body.description,
+      duration: req.body.duration,
+      date: req.body.date,
+      labelId: req.body.labelId,
+    }
+    try {
+      const updatedTodo = await updateTodoSchema.validate(clientPayload)
+      await prisma.todo.update({
+        where: {
+          id: req.query.todoId,
+        },
+        data: {
+          ...updatedTodo,
+        },
+      })
+      return res.status(200).send('OK')
+    } catch (e) {
+      if (e instanceof ValidationError) {
+        return res.status(400).send(e.message)
+      }
+      console.error(e)
+      return res.status(500).send('Internal Server Error')
     }
   }
   return res.status(404).send('Not found')

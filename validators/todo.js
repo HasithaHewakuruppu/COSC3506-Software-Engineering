@@ -12,3 +12,11 @@ export const createTodoSchema = object({
 export const deleteTodoSchema = object({
   todoId: string().required(),
 })
+
+export const updateTodoSchema = object({
+  title: string().required(),
+  description: string().required(),
+  duration: number().required().positive().integer(),
+  date: date().required(),
+  labelId: string().required(),
+})

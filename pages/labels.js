@@ -6,6 +6,7 @@ import { prisma } from '../lib/db'
 import { getSession } from 'next-auth/react'
 import CreatableSelect from 'react-select/creatable'
 import { LEISURE_COLOR, WORK_COLOR, FITNESS_COLOR } from '../utils/colors'
+import categories from '../utils/categories'
 
 export default function RestrictedPage({ session, alreadyHasLabels }) {
   const [workLabels, setWorkLabels] = useState([])
@@ -62,15 +63,15 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
       <div className="d-flex flex-column gap-3">
         <div>
           <label className="fs-8 fw-light text-muted">
-            Create your work labels:
+            Create your {categories.WORK.toLowerCase()} labels:
           </label>
           <LabelPicker
-            category="WORK"
+            category={categories.WORK}
             onChange={(options) => {
               setWorkLabels(
                 options.map((option) => ({
                   name: option.value,
-                  category: 'WORK',
+                  category: categories.WORK,
                 }))
               )
             }}
@@ -78,15 +79,15 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
         </div>
         <div>
           <label className="fs-8 fw-light text-muted">
-            Create your leisure labels:
+            Create your {categories.LEISURE.toLowerCase()} labels:
           </label>
           <LabelPicker
-            category="LEISURE"
+            category={categories.LEISURE}
             onChange={(options) => {
               setLeisureLabels(
                 options.map((option) => ({
                   name: option.value,
-                  category: 'LEISURE',
+                  category: categories.LEISURE,
                 }))
               )
             }}
@@ -94,15 +95,15 @@ export default function RestrictedPage({ session, alreadyHasLabels }) {
         </div>
         <div>
           <label className="fs-8 fw-light text-muted">
-            Create your fitness labels:
+            Create your {categories.FITNESS.toLowerCase()} labels:
           </label>
           <LabelPicker
-            category="FITNESS"
+            category={categories.FITNESS}
             onChange={(options) => {
               setFitnessLabel(
                 options.map((option) => ({
                   name: option.value,
-                  category: 'FITNESS',
+                  category: categories.FITNESS,
                 }))
               )
             }}
@@ -151,13 +152,13 @@ function LabelPicker({ category, onChange }) {
 }
 
 function getColorForCategory(category) {
-  if (category === 'WORK') {
+  if (category === categories.WORK) {
     return WORK_COLOR
   }
-  if (category === 'LEISURE') {
+  if (category === categories.LEISURE) {
     return LEISURE_COLOR
   }
-  if (category === 'FITNESS') {
+  if (category === categories.FITNESS) {
     return FITNESS_COLOR
   }
 }
