@@ -7,16 +7,11 @@ const Plot = dynamic(
   { ssr: false }
 )
 
-export default function PieChart() {
+export default function PieChart({ data }) {
   // Example of data you could pass in as prop
   const title = 'Mmmm pie'
   const width = 400
   const height = 400
-  const data = {
-    Work: 20,
-    Fitness: 60,
-    Leisure: 20,
-  }
 
   const getValues = () => Object.values(data)
   const getLabels = () => Object.keys(data)
