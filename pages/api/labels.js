@@ -46,7 +46,6 @@ export default async function label(req, res) {
           userEmail: session.user.email,
         },
       })
-      console.log(labels)
       return res.status(200).json(labels)
     } catch (e) {
       console.error(e)
