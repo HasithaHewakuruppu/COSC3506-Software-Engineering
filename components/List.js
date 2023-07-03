@@ -74,6 +74,7 @@ export default function List({ todos, isTodoListLoading, isToday, listDate }) {
               label={item.label.name}
               date={item.date}
               overdue={new Date(item.date) < currentDate}
+              listDate={listDate}
             />
           ))}
       </div>

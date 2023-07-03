@@ -4,10 +4,12 @@ import { motion } from 'framer-motion'
 import { useSWRConfig } from 'swr'
 import { API_ENDPOINTS } from '../utils/routes'
 import categories from '../utils/categories'
+import { PacmanLoader } from 'react-spinners'
 
 function ListItem(props) {
   const { mutate } = useSWRConfig()
   const [expanded, setExpanded] = useState(false)
+  const [deleting, setDeleting] = useState(false)
 
   const handleExpand = () => {
     setExpanded(!expanded)
@@ -78,13 +80,27 @@ function ListItem(props) {
                 {props.duration}
               </p>
               <div className={styles.favicons}>
-                <i className={`${styles.editIcon} fa fa-edit`}></i>
-                <i
-                  className={`${styles.trashIcon} fa fa-trash`}
-                  onClick={function wrappingFunction() {
-                    deleteTodo(props.todoid, mutate)
-                  }}
-                ></i>
+                {deleting ? (
+                  <div className={styles.deleting}>
+                    <PacmanLoader size={12} color="red" />
+                  </div>
+                ) : (
+                  <div>
+                    <i className={`${styles.editIcon} fa fa-edit`}></i>
+                    <i
+                      className={`${styles.trashIcon} fa fa-trash`}
+                      onClick={() =>
+                        deleteTodo(
+                          props.todoid,
+                          mutate,
+                          props.listDate,
+                          setDeleting,
+                          setExpanded
+                        )
+                      }
+                    ></i>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -94,7 +110,8 @@ function ListItem(props) {
   )
 }
 
-async function deleteTodo(todoid, mutate) {
+async function deleteTodo(todoid, mutate, listDate, setDeleting, setExpanded) {
+  setDeleting(true)
   try {
     await fetch('/api/todos/' + todoid, {
       method: 'DELETE',
@@ -102,7 +119,12 @@ async function deleteTodo(todoid, mutate) {
   } catch (e) {
     console.log(e)
   }
-  mutate(API_ENDPOINTS.GET_TODOS)
+  const url = listDate
+    ? API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
+    : API_ENDPOINTS.GET_TODOS_WITH_LABELS // by default will grab all todos
+  await mutate(url)
+  setDeleting(false)
+  setExpanded(false)
 }
 
 export default ListItem
