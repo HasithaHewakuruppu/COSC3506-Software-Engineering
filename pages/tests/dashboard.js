@@ -129,7 +129,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
             opacity: 0,
           }}
         >
-          <AddItemForm closeModal={closeModal} />
+          <AddItemForm closeModal={closeModal} listDate={selectedDate} />
         </motion.div>
       </Modal>
 

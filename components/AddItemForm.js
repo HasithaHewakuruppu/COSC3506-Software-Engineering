@@ -7,8 +7,9 @@ import SessionUser from '../components/SessionUser'
 import { toast } from 'react-hot-toast'
 import { useSWRConfig } from 'swr'
 import { API_ENDPOINTS } from '../utils/routes'
+import formatDate from '../utils/formatDate'
 
-function AddItemForm({ closeModal }) {
+function AddItemForm({ closeModal, listDate }) {
   const [title, setTitle] = useState('')
   const [hours, setHours] = useState('')
   const [minutes, setMinutes] = useState('')
@@ -53,7 +54,7 @@ function AddItemForm({ closeModal }) {
         toast('Task Added!', {
           duration: 4000,
         })
-        mutate(API_ENDPOINTS.GET_TODOS_FOR_TODAY)
+        mutate(API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`)
         mutate(API_ENDPOINTS.GET_TODOS_WITH_LABELS)
       } else {
         const error = await response.json()
