@@ -5,10 +5,10 @@ import { ValidationError } from 'yup'
 import { prisma } from '../../../lib/db'
 import { startOfDay, endOfDay } from 'date-fns'
 
-function getDateFromQuery(query) {
+function getDateFromQuery(dateFromQuery) {
   const date = new Date()
-  if (query.date) {
-    const [day, month, year] = query.date.split('-')
+  if (dateFromQuery) {
+    const [day, month, year] = dateFromQuery.split('-')
     date.setDate(day)
     date.setMonth(month - 1)
     date.setFullYear(year)
@@ -22,19 +22,21 @@ export default async function todos(req, res) {
   if (!session?.user?.email) {
     return res.status(401).send('Unauthorized')
   }
+
+  const { date, from, to, includeLabels, duration_gte, duration_lte } =
+    req.query
+
+  const where = getWhereClauseFromQuery({
+    date,
+    from,
+    to,
+    includeLabels,
+    duration_gte,
+    duration_lte,
+    email: session.user.email,
+  })
+
   if (req.method === 'GET') {
-    let where = {
-      userEmail: session.user.email,
-    }
-    if (req.query.date) {
-      where = {
-        ...where,
-        date: {
-          gte: startOfDay(getDateFromQuery(req.query)),
-          lte: endOfDay(getDateFromQuery(req.query)),
-        },
-      }
-    }
     let todos = []
     if (req.query.labels === 'true') {
       todos = await prisma.todo.findMany({
@@ -82,4 +84,71 @@ export default async function todos(req, res) {
   } else {
     return res.status(404).send('Not found')
   }
+}
+
+function getWhereClauseFromQuery({
+  date,
+  from,
+  to,
+  email,
+  includeLabels,
+  duration_gte,
+  duration_lte,
+}) {
+  let where = {
+    userEmail: email,
+  }
+  if (from) {
+    where = {
+      ...where,
+      date: {
+        ...where.date,
+        gte: startOfDay(getDateFromQuery(from)),
+      },
+    }
+  }
+
+  if (to) {
+    where = {
+      ...where,
+      date: {
+        ...where.date,
+        lte: endOfDay(getDateFromQuery(to)),
+      },
+    }
+  }
+  if (date) {
+    where = {
+      ...where,
+      date: {
+        gte: startOfDay(getDateFromQuery(date)),
+        lte: endOfDay(getDateFromQuery(date)),
+      },
+    }
+  }
+  if (includeLabels) {
+    where = {
+      ...where,
+      labelId: { in: includeLabels.split(',') },
+    }
+  }
+  if (duration_gte) {
+    where = {
+      ...where,
+      duration: { gte: parseInt(duration_gte) },
+    }
+  }
+  if (duration_lte) {
+    where = {
+      ...where,
+      duration: {
+        ...where.duration,
+        lte: parseInt(duration_lte),
+      },
+    }
+  }
+  if (duration_lte && duration_lte && duration_gte > duration_lte) {
+    delete where.duration
+  }
+  return where
 }
