@@ -3,7 +3,7 @@ import useSWR from 'swr'
 import DatePicker from 'react-datepicker'
 import styles from '../styles/AddItemForm.module.css'
 import 'react-datepicker/dist/react-datepicker.css'
-import { toast } from 'react-hot-toast'
+import formatDate from '../utils/formatDate'
 import { API_ENDPOINTS } from '../utils/routes'
 
 function FilterItemForm({ closeModal, setListURL }) {
@@ -27,10 +27,34 @@ function FilterItemForm({ closeModal, setListURL }) {
     setIsLoading(true)
     e.preventDefault()
 
-    // this is where the url needs to be made and passed to the setListURL function
+    // console.log(selectedDateFrom)
+    // console.log(selectedDateTo)
+    // console.log('&includeLabels=' + labelIds)
+    // console.log('&duration_gte' + (hoursFrom * 60 + minutesFrom) * 60 * 1000)
+    // console.log('&duration_lte' + (hoursTo * 60 + minutesTo) * 60 * 1000)
 
-    const url =
-      'http://localhost:3000/api/todos?&from=18-07-2023&labels=true&to=23-07-2023' // this is just a dummu url for now
+    const baseURL = 'http://localhost:3000/api/todos'
+    let url = `${baseURL}?labels=true`
+
+    if (selectedDateFrom) {
+      url += `&from=${formatDate(selectedDateFrom)}`
+    }
+
+    if (selectedDateTo) {
+      url += `&to=${formatDate(selectedDateTo)}`
+    }
+
+    if (labelIds.length > 0) {
+      url += `&includeLabels=${labelIds}`
+    }
+
+    url += `&duration_gte=${(hoursFrom * 60 + minutesFrom) * 60 * 1000}`
+
+    if (hoursTo * 60 + minutesTo > 0) {
+      url += `&duration_lte=${(hoursTo * 60 + minutesTo) * 60 * 1000}`
+    }
+
+    console.log(url)
     setListURL(url)
 
     closeModal()
@@ -71,7 +95,7 @@ function FilterItemForm({ closeModal, setListURL }) {
                     selected={selectedDateFrom}
                     onChange={(date) => setSelectedDateFrom(date)}
                     placeholderText="Select task date"
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="dd-MM-yyyy"
                     wrapperClassName="datePicker"
                   />
                 </div>
@@ -84,7 +108,7 @@ function FilterItemForm({ closeModal, setListURL }) {
                     selected={selectedDateTo}
                     onChange={(date) => setSelectedDateTo(date)}
                     placeholderText="Select task date"
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="dd-MM-yyyy"
                     wrapperClassName="datePicker"
                   />
                 </div>
