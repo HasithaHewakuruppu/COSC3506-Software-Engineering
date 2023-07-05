@@ -18,7 +18,23 @@ export default function List({ todos, isTodoListLoading, listURL }) {
   const currentDate = new Date()
   currentDate.setHours(0, 0, 0, 0)
 
-  // const isToday = isTodayDateFns(listDate) // the listDate needs to be extracted from the listURL
+  let listDate = null
+
+  if (listURL) {
+    const dateIndex = listURL.indexOf('date=')
+    if (dateIndex !== -1) {
+      // Extract the substring from "date=" until the end of the URL
+      const dateSubstring = listURL.substring(dateIndex + 'date='.length)
+
+      // Extract the day, month, and year components
+      const [day, month, year] = dateSubstring.split('-')
+
+      // Create a new Date object with individual components
+      listDate = new Date(year, month - 1, day)
+    }
+  }
+
+  const isToday = isTodayDateFns(listDate) // the listDate needs to be extracted from the listURL, the old url that is...
 
   const formatDuration = (duration) => {
     const hours = Math.floor(duration / (60 * 60 * 1000))
@@ -56,8 +72,7 @@ export default function List({ todos, isTodoListLoading, listURL }) {
   return (
     <div>
       <div className={styles.headingContainer}>
-        {/* <ListHeader listDate={listDate} isToday={isToday} /> */}
-        <p>Temp for now...</p>
+        <ListHeader listDate={listDate} isToday={isToday} listURL={listURL} />
       </div>
       <AnimatePresence>
         {!isOverdueBannerDismissed && (
@@ -119,47 +134,62 @@ function OverdueTodosBanner({ todos, setIsOverdueBannerDismissed }) {
   )
 }
 
-// function ListHeader({ isToday, listDate }) {
-//   if (isToday) {
-//     return (
-//       <>
-//         <CalendarCheck size={40} strokeWidth={0.75} fill="#f2f2f2" />
-//         <h1
-//           style={{
-//             fontSize: '1.8rem',
-//             margin: 0,
-//           }}
-//         >
-//           Today&apos;s Todos
-//         </h1>
-//       </>
-//     )
-//   } else if (!listURL) {
-//     return (
-//       <>
-//         <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
-//         <h1
-//           style={{
-//             fontSize: '1.8rem',
-//             margin: 0,
-//           }}
-//         >
-//           All My Todos
-//         </h1>
-//       </>
-//     )
-//   }
-//   return (
-//     <>
-//       <CalendarDays size={40} strokeWidth={0.75} fill="#f2f2f2" />
-//       <h1
-//         style={{
-//           fontSize: '1.8rem',
-//           margin: 0,
-//         }}
-//       >
-//         {'Todos for ' + format(listDate, 'cccc MMMM do')}
-//       </h1>
-//     </>
-//   )
-// }
+function ListHeader({ isToday, listDate, listURL }) {
+  if (isToday) {
+    return (
+      <>
+        <CalendarCheck size={40} strokeWidth={0.75} fill="#f2f2f2" />
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          Today&apos;s Todos
+        </h1>
+      </>
+    )
+  } else if (!listURL) {
+    return (
+      <>
+        <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          All My Todos
+        </h1>
+      </>
+    )
+  } else if (listDate) {
+    return (
+      <>
+        <CalendarDays size={40} strokeWidth={0.75} fill="#f2f2f2" />
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          {'Todos for ' + format(listDate, 'cccc MMMM do')}
+        </h1>
+      </>
+    )
+  } else {
+    return (
+      <>
+        <CalendarDays size={40} strokeWidth={0.75} fill="#f2f2f2" />
+        <h1
+          style={{
+            fontSize: '1.8rem',
+            margin: 0,
+          }}
+        >
+          {'Filtered Todos'}
+        </h1>
+      </>
+    )
+  }
+}
