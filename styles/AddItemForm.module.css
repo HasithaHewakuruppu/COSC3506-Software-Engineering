@@ -23,5 +23,7 @@
   cursor: pointer;
 }
 
-.datepicker {
+.labelCheckboxContainer {
+  max-height: 100px;
+  overflow-y: auto;
 }

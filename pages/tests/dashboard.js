@@ -11,6 +11,7 @@ import { LABELS_PAGE, LOGIN_PAGE } from '../../utils/routes'
 import { useIsClient } from '../../hooks/useIsClient'
 import Modal from 'react-modal'
 import AddItemForm from '../../components/AddItemForm'
+import FilterItemForm from '../../components/FilterItemForm'
 import { motion } from 'framer-motion'
 
 Modal.setAppElement('#__next')
@@ -20,6 +21,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
   const [selectedDate, setSelectedDate] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false)
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
 
   const router = useRouter()
   const isClient = useIsClient()
@@ -48,6 +50,14 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
     setIsCalendarModalOpen(false)
   }
 
+  function openFilterModal() {
+    setIsFilterModalOpen(true)
+  }
+
+  function closeFilterModal() {
+    setIsFilterModalOpen(false)
+  }
+
   const handleLogout = async () => {
     setLoggingOut(true)
     await signOut()
@@ -70,6 +80,12 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
               <PulseLoader color="#0d6efd" />
             ) : (
               <>
+                <button
+                  className={`${styles.button} btn btn-primary`}
+                  onClick={openFilterModal}
+                >
+                  Filter
+                </button>
                 <button
                   className={`${styles.button} btn btn-primary`}
                   onClick={openCalendarModal}
@@ -170,6 +186,41 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
             closeModal={closeCalendarModal}
             setListSelectedDate={setSelectedDate}
           />
+        </motion.div>
+      </Modal>
+
+      <Modal
+        isOpen={isFilterModalOpen}
+        onRequestClose={closeFilterModal}
+        contentLabel="Filter Todo Modal"
+        transparent={true}
+        style={{
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            transform: 'translate(-50%, -50%)',
+            borderRadius: '10px',
+            padding: 0,
+          },
+        }}
+      >
+        <motion.div
+          animate={{
+            scale: 0.9,
+            opacity: 1,
+          }}
+          initial={{
+            scale: 0,
+            opacity: 0,
+          }}
+          exit={{
+            scale: 0,
+            opacity: 0,
+          }}
+        >
+          <FilterItemForm />
         </motion.div>
       </Modal>
     </>
