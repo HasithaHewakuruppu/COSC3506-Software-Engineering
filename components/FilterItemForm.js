@@ -3,13 +3,10 @@ import useSWR from 'swr'
 import DatePicker from 'react-datepicker'
 import styles from '../styles/AddItemForm.module.css'
 import 'react-datepicker/dist/react-datepicker.css'
-import SessionUser from '../components/SessionUser'
 import { toast } from 'react-hot-toast'
-import { useSWRConfig } from 'swr'
 import { API_ENDPOINTS } from '../utils/routes'
-import formatDate from '../utils/formatDate'
 
-function AddItemForm({ closeModal, listDate }) {
+function AddItemForm({ closeModal }) {
   const [hoursFrom, setHoursFrom] = useState('')
   const [minutesFrom, setMinutesFrom] = useState('')
   const [hoursTo, setHoursTo] = useState('')
@@ -18,7 +15,6 @@ function AddItemForm({ closeModal, listDate }) {
   const [selectedDateTo, setSelectedDateTo] = useState(null)
   const [labelIds, setLabelIds] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const { mutate } = useSWRConfig()
 
   const fetcher = (url) => fetch(url).then((res) => res.json())
   const { data: labels, error } = useSWR(API_ENDPOINTS.GET_LABELS, fetcher)
@@ -31,33 +27,13 @@ function AddItemForm({ closeModal, listDate }) {
     setIsLoading(true)
     e.preventDefault()
 
-    // const sessionUser = await SessionUser()
-    // const userEmail = sessionUser.email
-
-    // const newItem = {
-    //   title,
-    //   duration: (hours * 60 + minutes) * 60 * 1000, // should be in miliseconds for DB
-    //   description,
-    //   labelId,
-    //   date: selectedDate,
-    //   userEmail,
-    // }
-
     try {
-      const response = await fetch(API_ENDPOINTS.GET_TODOS, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newItem),
-      })
+      // this is where the url needs to be set
 
       if (response.ok) {
         toast('Tasks Filtered!', {
           duration: 4000,
         })
-        mutate(API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`)
-        mutate(API_ENDPOINTS.GET_TODOS_WITH_LABELS)
       } else {
         const error = await response.json()
         toast('Sorry, we could not filter your task. ' + error.message, {
