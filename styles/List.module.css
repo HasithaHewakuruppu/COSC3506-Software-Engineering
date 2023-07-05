@@ -1,5 +1,5 @@
 .listContainer {
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 150px);
   overflow-y: auto;
 }
 

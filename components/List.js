@@ -1,4 +1,9 @@
-import { format, isBefore, isSameDay } from 'date-fns'
+import {
+  format,
+  isBefore,
+  isSameDay,
+  isToday as isTodayDateFns,
+} from 'date-fns'
 import { CalendarCheck, CalendarDays, Star } from 'lucide-react'
 import { useState } from 'react'
 import styles from '../styles/List.module.css'
@@ -7,11 +12,13 @@ import ListItem from './ListItem'
 import Spinner from './Spinner'
 import { AnimatePresence, motion } from 'framer-motion'
 
-export default function List({ todos, isTodoListLoading, isToday, listDate }) {
+export default function List({ todos, isTodoListLoading, listURL }) {
   const [isOverdueBannerDismissed, setIsOverdueBannerDismissed] =
     useState(false)
   const currentDate = new Date()
   currentDate.setHours(0, 0, 0, 0)
+
+  // const isToday = isTodayDateFns(listDate) // the listDate needs to be extracted from the listURL
 
   const formatDuration = (duration) => {
     const hours = Math.floor(duration / (60 * 60 * 1000))
@@ -49,13 +56,14 @@ export default function List({ todos, isTodoListLoading, isToday, listDate }) {
   return (
     <div>
       <div className={styles.headingContainer}>
-        <ListHeader listDate={listDate} isToday={isToday} />
+        {/* <ListHeader listDate={listDate} isToday={isToday} /> */}
+        <p>Temp for now...</p>
       </div>
       <AnimatePresence>
         {!isOverdueBannerDismissed && (
           <OverdueTodosBanner
             todos={todos}
-            hideOverdueTodos={Boolean(listDate)}
+            hideOverdueTodos={Boolean(listURL)}
             setIsOverdueBannerDismissed={setIsOverdueBannerDismissed}
             isOverdueBannerDismissed={isOverdueBannerDismissed}
           />
@@ -74,7 +82,7 @@ export default function List({ todos, isTodoListLoading, isToday, listDate }) {
               label={item.label.name}
               date={item.date}
               overdue={new Date(item.date) < currentDate}
-              listDate={listDate}
+              listURL={listURL}
             />
           ))}
       </div>
@@ -111,47 +119,47 @@ function OverdueTodosBanner({ todos, setIsOverdueBannerDismissed }) {
   )
 }
 
-function ListHeader({ isToday, listDate }) {
-  if (isToday) {
-    return (
-      <>
-        <CalendarCheck size={40} strokeWidth={0.75} fill="#f2f2f2" />
-        <h1
-          style={{
-            fontSize: '1.8rem',
-            margin: 0,
-          }}
-        >
-          Today&apos;s Todos
-        </h1>
-      </>
-    )
-  } else if (!listDate) {
-    return (
-      <>
-        <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
-        <h1
-          style={{
-            fontSize: '1.8rem',
-            margin: 0,
-          }}
-        >
-          All My Todos
-        </h1>
-      </>
-    )
-  }
-  return (
-    <>
-      <CalendarDays size={40} strokeWidth={0.75} fill="#f2f2f2" />
-      <h1
-        style={{
-          fontSize: '1.8rem',
-          margin: 0,
-        }}
-      >
-        {'Todos for ' + format(listDate, 'cccc MMMM do')}
-      </h1>
-    </>
-  )
-}
+// function ListHeader({ isToday, listDate }) {
+//   if (isToday) {
+//     return (
+//       <>
+//         <CalendarCheck size={40} strokeWidth={0.75} fill="#f2f2f2" />
+//         <h1
+//           style={{
+//             fontSize: '1.8rem',
+//             margin: 0,
+//           }}
+//         >
+//           Today&apos;s Todos
+//         </h1>
+//       </>
+//     )
+//   } else if (!listURL) {
+//     return (
+//       <>
+//         <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
+//         <h1
+//           style={{
+//             fontSize: '1.8rem',
+//             margin: 0,
+//           }}
+//         >
+//           All My Todos
+//         </h1>
+//       </>
+//     )
+//   }
+//   return (
+//     <>
+//       <CalendarDays size={40} strokeWidth={0.75} fill="#f2f2f2" />
+//       <h1
+//         style={{
+//           fontSize: '1.8rem',
+//           margin: 0,
+//         }}
+//       >
+//         {'Todos for ' + format(listDate, 'cccc MMMM do')}
+//       </h1>
+//     </>
+//   )
+// }

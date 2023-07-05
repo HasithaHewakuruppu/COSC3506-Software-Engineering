@@ -18,7 +18,7 @@ Modal.setAppElement('#__next')
 
 export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
   const [loggingOut, setLoggingOut] = useState(false)
-  const [selectedDate, setSelectedDate] = useState()
+  const [listURL, setListURL] = useState()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false)
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
@@ -111,7 +111,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
       </nav>
 
       <div className={styles.container}>
-        <ListPage listDate={selectedDate} />
+        <ListPage listURL={listURL} />
       </div>
 
       <Modal
@@ -145,7 +145,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
             opacity: 0,
           }}
         >
-          <AddItemForm closeModal={closeModal} listDate={selectedDate} />
+          <AddItemForm closeModal={closeModal} listURL={listURL} />
         </motion.div>
       </Modal>
 
@@ -182,10 +182,7 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
             opacity: 0,
           }}
         >
-          <Calendar
-            closeModal={closeCalendarModal}
-            setListSelectedDate={setSelectedDate}
-          />
+          <Calendar closeModal={closeCalendarModal} setListURL={setListURL} />
         </motion.div>
       </Modal>
 
@@ -220,7 +217,10 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
             opacity: 0,
           }}
         >
-          <FilterItemForm />
+          <FilterItemForm
+            closeModal={closeFilterModal}
+            setListURL={setListURL}
+          />
         </motion.div>
       </Modal>
     </>

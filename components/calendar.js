@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import useSWR from 'swr'
 import styles from '../styles/Calendar.module.css'
 import { API_ENDPOINTS } from '../utils/routes'
+import formatDate from '../utils/formatDate'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-export default function Calendar({ closeModal, setListSelectedDate }) {
+export default function Calendar({ closeModal, setListURL }) {
   const today = new Date()
   const [selectedDate, setSelectedDate] = useState(today)
   const [monthData, setMonthData] = useState([])
@@ -89,7 +90,8 @@ export default function Calendar({ closeModal, setListSelectedDate }) {
       day
     )
     setSelectedDate(newDate)
-    setListSelectedDate(newDate)
+    const url = API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(newDate)}`
+    setListURL(url)
     closeModal()
   }
 

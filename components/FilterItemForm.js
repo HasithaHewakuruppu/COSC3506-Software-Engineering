@@ -6,7 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { toast } from 'react-hot-toast'
 import { API_ENDPOINTS } from '../utils/routes'
 
-function AddItemForm({ closeModal }) {
+function FilterItemForm({ closeModal, setListURL }) {
   const [hoursFrom, setHoursFrom] = useState('')
   const [minutesFrom, setMinutesFrom] = useState('')
   const [hoursTo, setHoursTo] = useState('')
@@ -27,28 +27,13 @@ function AddItemForm({ closeModal }) {
     setIsLoading(true)
     e.preventDefault()
 
-    try {
-      // this is where the url needs to be set
+    // this is where the url needs to be made and passed to the setListURL function
 
-      if (response.ok) {
-        toast('Tasks Filtered!', {
-          duration: 4000,
-        })
-      } else {
-        const error = await response.json()
-        toast('Sorry, we could not filter your task. ' + error.message, {
-          duration: 4000,
-        })
-      }
-    } catch (error) {
-      toast('Sorry, we could not filter your task. ', {
-        duration: 4000,
-      })
-    } finally {
-      closeModal()
-    }
+    const url =
+      'http://localhost:3000/api/todos?&from=18-07-2023&labels=true&to=23-07-2023' // this is just a dummu url for now
+    setListURL(url)
 
-    setIsLoading(false)
+    closeModal()
   }
 
   function handleLabelChange(labelId, checked) {
@@ -239,4 +224,4 @@ function AddItemForm({ closeModal }) {
   )
 }
 
-export default AddItemForm
+export default FilterItemForm
