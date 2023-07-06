@@ -3,10 +3,10 @@ import useSWR from 'swr'
 import DatePicker from 'react-datepicker'
 import styles from '../styles/AddItemForm.module.css'
 import 'react-datepicker/dist/react-datepicker.css'
-import { toast } from 'react-hot-toast'
+import formatDate from '../utils/formatDate'
 import { API_ENDPOINTS } from '../utils/routes'
 
-function AddItemForm({ closeModal }) {
+function FilterItemForm({ closeModal, setListURL }) {
   const [hoursFrom, setHoursFrom] = useState('')
   const [minutesFrom, setMinutesFrom] = useState('')
   const [hoursTo, setHoursTo] = useState('')
@@ -27,28 +27,37 @@ function AddItemForm({ closeModal }) {
     setIsLoading(true)
     e.preventDefault()
 
-    try {
-      // this is where the url needs to be set
+    // console.log(selectedDateFrom)
+    // console.log(selectedDateTo)
+    // console.log('&includeLabels=' + labelIds)
+    // console.log('&duration_gte' + (hoursFrom * 60 + minutesFrom) * 60 * 1000)
+    // console.log('&duration_lte' + (hoursTo * 60 + minutesTo) * 60 * 1000)
 
-      if (response.ok) {
-        toast('Tasks Filtered!', {
-          duration: 4000,
-        })
-      } else {
-        const error = await response.json()
-        toast('Sorry, we could not filter your task. ' + error.message, {
-          duration: 4000,
-        })
-      }
-    } catch (error) {
-      toast('Sorry, we could not filter your task. ', {
-        duration: 4000,
-      })
-    } finally {
-      closeModal()
+    const baseURL = 'http://localhost:3000/api/todos'
+    let url = `${baseURL}?labels=true`
+
+    if (selectedDateFrom) {
+      url += `&from=${formatDate(selectedDateFrom)}`
     }
 
-    setIsLoading(false)
+    if (selectedDateTo) {
+      url += `&to=${formatDate(selectedDateTo)}`
+    }
+
+    if (labelIds.length > 0) {
+      url += `&includeLabels=${labelIds}`
+    }
+
+    url += `&duration_gte=${(hoursFrom * 60 + minutesFrom) * 60 * 1000}`
+
+    if (hoursTo * 60 + minutesTo > 0) {
+      url += `&duration_lte=${(hoursTo * 60 + minutesTo) * 60 * 1000}`
+    }
+
+    console.log(url)
+    setListURL(url)
+
+    closeModal()
   }
 
   function handleLabelChange(labelId, checked) {
@@ -86,7 +95,7 @@ function AddItemForm({ closeModal }) {
                     selected={selectedDateFrom}
                     onChange={(date) => setSelectedDateFrom(date)}
                     placeholderText="Select task date"
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="dd-MM-yyyy"
                     wrapperClassName="datePicker"
                   />
                 </div>
@@ -99,7 +108,7 @@ function AddItemForm({ closeModal }) {
                     selected={selectedDateTo}
                     onChange={(date) => setSelectedDateTo(date)}
                     placeholderText="Select task date"
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="dd-MM-yyyy"
                     wrapperClassName="datePicker"
                   />
                 </div>
@@ -239,4 +248,4 @@ function AddItemForm({ closeModal }) {
   )
 }
 
-export default AddItemForm
+export default FilterItemForm

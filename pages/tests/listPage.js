@@ -1,19 +1,16 @@
-import { isToday as isTodayDateFns } from 'date-fns'
 import useSWR from 'swr'
+import { useState } from 'react'
 import List from '../../components/List'
-import formatDate from '../../utils/formatDate'
 import { API_ENDPOINTS } from '../../utils/routes'
 
-function ListPage({ listDate }) {
+function ListPage({ listURL }) {
+  const [sortType, setSortType] = useState('Date')
+
   const fetcher = async function (url) {
     return fetch(url).then((res) => res.json())
   }
 
-  const url = listDate
-    ? API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
-    : API_ENDPOINTS.GET_TODOS_WITH_LABELS // by default will grab all todos
-
-  const isToday = isTodayDateFns(listDate)
+  const url = listURL ? listURL : API_ENDPOINTS.GET_TODOS_WITH_LABELS // by default will grab all todos
 
   const {
     data: todos,
@@ -26,9 +23,32 @@ function ListPage({ listDate }) {
   }
 
   if (todos) {
-    todos.sort(function (a, b) {
-      return new Date(a.date) - new Date(b.date)
-    })
+    switch (sortType) {
+      case 'Date':
+        todos.sort(function (a, b) {
+          return new Date(a.date) - new Date(b.date)
+        })
+        break
+
+      case 'Duration':
+        todos.sort(function (a, b) {
+          return a.duration - b.duration
+        })
+        break
+
+      case 'Label':
+        todos.sort(function (a, b) {
+          return a.label.name.localeCompare(b.label.name)
+        })
+        break
+
+      default:
+        // Assuming the default case should sort by date
+        todos.sort(function (a, b) {
+          return new Date(a.date) - new Date(b.date)
+        })
+        break
+    }
   }
 
   return (
@@ -36,8 +56,8 @@ function ListPage({ listDate }) {
       <List
         todos={todos}
         isTodoListLoading={isTodoListLoading}
-        isToday={isToday}
-        listDate={listDate}
+        listURL={listURL}
+        setSortType={setSortType}
       />
     </div>
   )

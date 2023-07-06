@@ -5,7 +5,6 @@ import { useSWRConfig } from 'swr'
 import { API_ENDPOINTS } from '../utils/routes'
 import categories from '../utils/categories'
 import { PacmanLoader } from 'react-spinners'
-import formatDate from '../utils/formatDate'
 
 function ListItem(props) {
   const { mutate } = useSWRConfig()
@@ -94,7 +93,7 @@ function ListItem(props) {
                         deleteTodo(
                           props.todoid,
                           mutate,
-                          props.listDate,
+                          props.listURL,
                           setDeleting,
                           setExpanded
                         )
@@ -111,7 +110,7 @@ function ListItem(props) {
   )
 }
 
-async function deleteTodo(todoid, mutate, listDate, setDeleting, setExpanded) {
+async function deleteTodo(todoid, mutate, listURL, setDeleting, setExpanded) {
   setDeleting(true)
   try {
     await fetch('/api/todos/' + todoid, {
@@ -120,9 +119,7 @@ async function deleteTodo(todoid, mutate, listDate, setDeleting, setExpanded) {
   } catch (e) {
     console.log(e)
   }
-  const url = listDate
-    ? API_ENDPOINTS.GET_TODOS_FOR_DATE + `${formatDate(listDate)}`
-    : API_ENDPOINTS.GET_TODOS_WITH_LABELS // by default will grab all todos
+  const url = listURL ? listURL : API_ENDPOINTS.GET_TODOS_WITH_LABELS // by default will grab all todos
   await mutate(url)
   setDeleting(false)
   setExpanded(false)

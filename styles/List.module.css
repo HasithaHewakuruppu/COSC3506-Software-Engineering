@@ -1,5 +1,5 @@
 .listContainer {
-  max-height: calc(100vh - 120px);
+  max-height: calc(100vh - 150px);
   overflow-y: auto;
 }
 
@@ -61,4 +61,23 @@
   border-radius: 4px;
   min-width: 50px;
   min-height: 30px;
+}
+
+.navbarContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sortText {
+  margin: 0;
+  margin-right: 10px;
+}
+
+.sortContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-right: 10px;
 }
