@@ -71,8 +71,23 @@ export default function List({ todos, isTodoListLoading, listURL }) {
 
   return (
     <div>
-      <div className={styles.headingContainer}>
-        <ListHeader listDate={listDate} isToday={isToday} listURL={listURL} />
+      <div className={styles.navbarContent}>
+        <div className={styles.headingContainer}>
+          <ListHeader listDate={listDate} isToday={isToday} listURL={listURL} />
+        </div>
+        <div className={styles.sortContainer}>
+          <label>Sort by</label>
+          <select
+            onChange={(event) => {
+              const selectedValue = event.target.value
+              console.log('Selected value:', selectedValue) // now this should call setfunction and change the sort !!!
+            }}
+          >
+            <option value="Date">Date</option>
+            <option value="Duration">Duration</option>
+            <option value="Label">Label</option>
+          </select>
+        </div>
       </div>
       <AnimatePresence>
         {!isOverdueBannerDismissed && (

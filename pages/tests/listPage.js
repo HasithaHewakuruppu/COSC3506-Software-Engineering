@@ -19,6 +19,8 @@ function ListPage({ listURL }) {
     console.error('Error fetching todos:', error)
   }
 
+  // this is where the sorting happens.......
+  // this is where the other sorting based on label and duration should also happen
   if (todos) {
     todos.sort(function (a, b) {
       return new Date(a.date) - new Date(b.date)
