@@ -1,8 +1,11 @@
 import useSWR from 'swr'
+import { useState } from 'react'
 import List from '../../components/List'
 import { API_ENDPOINTS } from '../../utils/routes'
 
 function ListPage({ listURL }) {
+  const [sortType, setSortType] = useState('Date')
+
   const fetcher = async function (url) {
     return fetch(url).then((res) => res.json())
   }
@@ -19,15 +22,34 @@ function ListPage({ listURL }) {
     console.error('Error fetching todos:', error)
   }
 
-  // this is where the sorting happens.......
-  // this is where the other sorting based on label and duration should also happen
   if (todos) {
-    todos.sort(function (a, b) {
-      return new Date(a.date) - new Date(b.date)
-    })
-  }
+    switch (sortType) {
+      case 'Date':
+        todos.sort(function (a, b) {
+          return new Date(a.date) - new Date(b.date)
+        })
+        break
 
-  console.log('todos:', todos)
+      case 'Duration':
+        todos.sort(function (a, b) {
+          return a.duration - b.duration
+        })
+        break
+
+      case 'Label':
+        todos.sort(function (a, b) {
+          return a.label.name.localeCompare(b.label.name)
+        })
+        break
+
+      default:
+        // Assuming the default case should sort by date
+        todos.sort(function (a, b) {
+          return new Date(a.date) - new Date(b.date)
+        })
+        break
+    }
+  }
 
   return (
     <div>
@@ -35,6 +57,7 @@ function ListPage({ listURL }) {
         todos={todos}
         isTodoListLoading={isTodoListLoading}
         listURL={listURL}
+        setSortType={setSortType}
       />
     </div>
   )

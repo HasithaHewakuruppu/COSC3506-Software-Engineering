@@ -12,7 +12,12 @@ import ListItem from './ListItem'
 import Spinner from './Spinner'
 import { AnimatePresence, motion } from 'framer-motion'
 
-export default function List({ todos, isTodoListLoading, listURL }) {
+export default function List({
+  todos,
+  isTodoListLoading,
+  listURL,
+  setSortType,
+}) {
   const [isOverdueBannerDismissed, setIsOverdueBannerDismissed] =
     useState(false)
   const currentDate = new Date()
@@ -80,7 +85,7 @@ export default function List({ todos, isTodoListLoading, listURL }) {
           <select
             onChange={(event) => {
               const selectedValue = event.target.value
-              console.log('Selected value:', selectedValue) // now this should call setfunction and change the sort !!!
+              setSortType(selectedValue)
             }}
           >
             <option value="Date">Date</option>
