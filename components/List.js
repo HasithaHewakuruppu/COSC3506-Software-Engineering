@@ -20,6 +20,8 @@ export default function List({
 }) {
   const [isOverdueBannerDismissed, setIsOverdueBannerDismissed] =
     useState(false)
+  const [isOverdueBannerDisplayed, setIsOverdueBannerDisplayed] =
+    useState(false)
   const currentDate = new Date()
   currentDate.setHours(0, 0, 0, 0)
 
@@ -75,7 +77,7 @@ export default function List({
   }
 
   return (
-    <div>
+    <div className={styles.mainContainer}>
       <div className={styles.navbarContent}>
         <div className={styles.headingContainer}>
           <ListHeader listDate={listDate} isToday={isToday} listURL={listURL} />
@@ -101,10 +103,17 @@ export default function List({
             hideOverdueTodos={Boolean(listURL)}
             setIsOverdueBannerDismissed={setIsOverdueBannerDismissed}
             isOverdueBannerDismissed={isOverdueBannerDismissed}
+            setIsOverdueBannerDisplayed={setIsOverdueBannerDisplayed}
           />
         )}
       </AnimatePresence>
-      <div className={styles.listContainer}>
+      <div
+        className={
+          isOverdueBannerDisplayed
+            ? styles.listContainerWithOverdueTodos
+            : styles.listContainer
+        }
+      >
         {todos &&
           todos.map((item) => (
             <ListItem
@@ -125,7 +134,11 @@ export default function List({
   )
 }
 
-function OverdueTodosBanner({ todos, setIsOverdueBannerDismissed }) {
+function OverdueTodosBanner({
+  todos,
+  setIsOverdueBannerDismissed,
+  setIsOverdueBannerDisplayed,
+}) {
   const countOverdueTodos = todos.filter(
     (t) =>
       isBefore(new Date(t.date), new Date()) &&
@@ -136,6 +149,8 @@ function OverdueTodosBanner({ todos, setIsOverdueBannerDismissed }) {
     return null
   }
 
+  setIsOverdueBannerDisplayed(true)
+
   return (
     <motion.div initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <div className={styles.overdueTodosBannerWrapepr}>
@@ -145,7 +160,10 @@ function OverdueTodosBanner({ todos, setIsOverdueBannerDismissed }) {
         </h3>
         <button
           className={styles.overdueTodosOkButton}
-          onClick={() => setIsOverdueBannerDismissed(true)}
+          onClick={() => {
+            setIsOverdueBannerDisplayed(false)
+            setIsOverdueBannerDismissed(true)
+          }}
         >
           OK
         </button>

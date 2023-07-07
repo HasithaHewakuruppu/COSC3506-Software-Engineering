@@ -1,5 +1,15 @@
+.listContainerWithOverdueTodos {
+  max-height: calc(100vh - 210px);
+  overflow-y: auto;
+}
+
 .listContainer {
   max-height: calc(100vh - 150px);
+  overflow-y: auto;
+}
+
+.mainContainer {
+  max-height: calc(100vh - 60px);
   overflow-y: auto;
 }
 

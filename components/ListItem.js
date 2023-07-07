@@ -1,5 +1,5 @@
 import styles from '../styles/ListItem.module.css'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useSWRConfig } from 'swr'
 import { API_ENDPOINTS } from '../utils/routes'
@@ -10,6 +10,10 @@ function ListItem(props) {
   const { mutate } = useSWRConfig()
   const [expanded, setExpanded] = useState(false)
   const [deleting, setDeleting] = useState(false)
+
+  useEffect(() => {
+    setExpanded(false) // Reset expanded to false when title changes during sort
+  }, [props.title])
 
   const handleExpand = () => {
     setExpanded(!expanded)
