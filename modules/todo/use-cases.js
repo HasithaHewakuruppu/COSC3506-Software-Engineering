@@ -29,7 +29,6 @@ export function buildDeleteTodoByIdInDb({ db, todoDeleteValidator }) {
 
 export function buildEditTodoByIdInDb({ db, todoEditValidator }) {
   return async function editTodoByIdInDb({ id, todo }) {
-    debugger
     const editTodoPayload = await todoEditValidator({ id, todo })
     return db.editTodoById({
       id: editTodoPayload.id,
