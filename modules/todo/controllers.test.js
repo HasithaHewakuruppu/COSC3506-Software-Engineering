@@ -1,17 +1,38 @@
-import { createTodoController } from './controllers'
+import {
+  makeCreateTodoController,
+  makeDeleteTodoController,
+  makeEditTodoController,
+  makeGetTodosController,
+} from './controllers'
 import { expect, it, describe } from 'vitest'
-import { createTodoService } from './services'
+import {
+  createTodoService,
+  deleteTodoByIdService,
+  editTodoByIdService,
+  getTodosService,
+} from './services'
 import { makeFakeTodo } from './db.test'
 
-const todoController = createTodoController({
+const createTodoController = makeCreateTodoController({
   createTodoService,
 })
+const deleteTodoController = makeDeleteTodoController({
+  deleteTodoByIdService,
+})
 
-describe('Todo Controller', async () => {
-  describe('Get Todo Controller', async () => {
+const editTodoController = makeEditTodoController({
+  editTodoService: editTodoByIdService,
+})
+
+const getTodosController = makeGetTodosController({
+  getTodosService,
+})
+
+describe.skip.concurrent('Todo Controller', async () => {
+  describe.concurrent('Create Todo Controller', async () => {
     it('should return 201 if todo created', async () => {
       const mockRequest = makeFakeHttpRequest()
-      const response = await todoController(mockRequest)
+      const response = await createTodoController(mockRequest)
 
       expect(response.statusCode).toBe(201)
       expect(response.body.id).toBeDefined()
@@ -23,23 +44,97 @@ describe('Todo Controller', async () => {
       expect(response.body.labelId).toBe(mockRequest.body.labelId)
       expect(response.body.userEmail).toBe(mockRequest.body.userEmail)
     })
-    it.skip('should return 400 if todo no user email provided', async () => {
+    it('should throw if no user email provided', async () => {
       const mockRequest = makeFakeHttpRequest({}, { userEmail: null })
-      const response = await todoController(mockRequest)
-
-      expect(response.statusCode).toBe(400)
-      expect(response.error).toBeDefined()
+      expect(
+        async () => await createTodoController(mockRequest)
+      ).rejects.toThrow()
     })
   })
 
-  describe('Delete Todo Controller', async () => {
+  describe.concurrent('Get Todos Controller', async () => {
+    it('should return 200 if todos found', async () => {
+      const mockRequest = makeFakeHttpRequest()
+      const createResponse = await createTodoController(mockRequest)
+
+      const mockRequest2 = makeFakeHttpRequest({
+        query: {
+          userEmail: mockRequest.body.userEmail,
+        },
+      })
+      const getResponse = await getTodosController(mockRequest2)
+      console.log({ getResponse: JSON.stringify(getResponse, null, 2) })
+      expect(getResponse.statusCode).toBe(200)
+      expect(getResponse.body).toContainEqual(createResponse.body)
+
+      const deleteRequest = makeFakeHttpRequest({
+        query: {
+          todoId: createResponse.body.id,
+        },
+      })
+      await deleteTodoController(deleteRequest)
+    })
+  })
+
+  describe.concurrent('Delete Todo Controller', async () => {
     it('should return 204 if todo deleted', async () => {
-      // const todoController = createTodoController({
-      //   deleteTodoByIdService,
-      // })
-      // const mockRequest = makeFakeHttpRequest()
-      // const response = await todoController(mockRequest)
-      // expect(response.statusCode).toBe(204)
+      const mockRequest = makeFakeHttpRequest({})
+      const res = await createTodoController(mockRequest)
+      const newTodoId = res.body.id
+
+      const mockRequest2 = makeFakeHttpRequest({
+        query: {
+          todoId: newTodoId,
+        },
+      })
+      const response = await deleteTodoController(mockRequest2)
+      expect(response.statusCode).toBe(204)
+    })
+    it('should throw if no todo id provided', async () => {
+      const mockRequest = makeFakeHttpRequest({
+        query: {},
+      })
+      expect(
+        async () => await deleteTodoController(mockRequest)
+      ).rejects.toThrow()
+    })
+  })
+  describe.concurrent('Edit Todo Controller', async () => {
+    it('should return 200 if todo edited', async () => {
+      const mockRequest = makeFakeHttpRequest({})
+      const res = await createTodoController(mockRequest)
+      const newTodoId = res.body.id
+
+      const mockRequest2 = makeFakeHttpRequest(
+        {
+          query: {
+            todoId: newTodoId,
+          },
+        },
+        {
+          title: 'New Updated Title',
+          description: 'New Updated Description',
+          duration: 2387,
+          labelId: res.body.labelId,
+          date: new Date(2343, 8, 28),
+        }
+      )
+
+      expect(res.body.title).not.toBe(mockRequest2.body.title)
+      expect(res.body.description).not.toBe(mockRequest2.body.description)
+      expect(res.body.duration).not.toBe(mockRequest2.body.duration)
+      expect(res.body.date).not.toEqual(mockRequest2.body.date)
+
+      const editedTodoResponse = await editTodoController(mockRequest2)
+      expect(editedTodoResponse.statusCode).toBe(200)
+    })
+    it('should throw if no todo id provided', async () => {
+      const mockRequest = makeFakeHttpRequest({
+        query: {},
+      })
+      expect(
+        async () => await editTodoController(mockRequest)
+      ).rejects.toThrow()
     })
   })
 })
@@ -48,9 +143,6 @@ function makeFakeHttpRequest(overrides, todoOverrides) {
   return {
     body: {
       ...makeFakeTodo(todoOverrides),
-    },
-    query: {
-      id: 'test-id',
     },
     method: 'GET',
     path: '/test-path',

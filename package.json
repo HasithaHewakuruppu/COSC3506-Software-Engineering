@@ -9,7 +9,7 @@
     "pretty": "prettier --write .",
     "lint": "eslint ./ --ext js,jsx --fix",
     "test": "vitest --test-timeout=15000",
-    "test:debug": "vitest --test-timeout=1500000"
+    "test:debug": "vitest --test-timeout=1500000 --watch"
   },
   "dependencies": {
     "@auth/prisma-adapter": "^1.0.0",

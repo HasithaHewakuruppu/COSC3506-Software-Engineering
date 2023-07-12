@@ -27,7 +27,7 @@ const createTodoService = buildCreateTodoInDb({
 /* Edit Todo  */
 const editTodoByIdService = buildEditTodoByIdInDb({
   db,
-  editTodoValidator,
+  todoEditValidator: editTodoValidator,
 })
 
 /* Get Todos  */
