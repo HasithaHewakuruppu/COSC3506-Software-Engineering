@@ -5,11 +5,14 @@ import { useSWRConfig } from 'swr'
 import { API_ENDPOINTS } from '../utils/routes'
 import categories from '../utils/categories'
 import { PacmanLoader } from 'react-spinners'
+import { GridLoader } from 'react-spinners'
 
 function ListItem(props) {
   const { mutate } = useSWRConfig()
   const [expanded, setExpanded] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [checkboxLoading, setCheckboxLoading] = useState(false)
+  const [checkboxChecked, setCheckboxChecked] = useState(props.completed)
 
   useEffect(() => {
     setExpanded(false) // Reset expanded to false when title changes during sort
@@ -41,6 +44,27 @@ function ListItem(props) {
       break
   }
 
+  const handleCheckboxClick = async (e) => {
+    e.stopPropagation()
+    setCheckboxLoading(true)
+    console.log('Checkbox clicked')
+    try {
+      const response = await fetch(`/api/todos/${props.todoid}/completed`, {
+        method: 'PATCH',
+      })
+      if (response.ok) {
+        // mutate(API_ENDPOINTS.GET_TODOS_WITH_LABELS)
+        console.log('Successfully updated completion status')
+      } else {
+        console.log('Failed to update completion status')
+      }
+    } catch (error) {
+      console.log('Error occurred while updating completion status:', error)
+    }
+    setCheckboxLoading(false)
+    setCheckboxChecked(!checkboxChecked)
+  }
+
   return (
     <motion.div
       animate={{
@@ -56,11 +80,20 @@ function ListItem(props) {
     >
       <div className={`${styles.itemContainer} ${categoryColor}`}>
         <div className={styles.unexpandedContainer} onClick={handleExpand}>
-          <input
-            type="checkbox"
-            className={styles.checkbox}
-            onClick={(e) => e.stopPropagation()}
-          />
+        
+        {checkboxLoading ? ( // Render spinner when checkboxLoading is true
+            <div className={styles.checkboxSpinner}>
+              <GridLoader size={3} color="blue" />
+            </div>
+          ) : (
+            <input
+              type="checkbox"
+              className={styles.checkbox}
+              defaultChecked={checkboxChecked}
+              onChange={handleCheckboxClick}
+            />
+          )}
+
           <div className={`${styles.label} ${labelColor}`}>
             <p className={styles.pEdit}>{props.label}</p>
           </div>
