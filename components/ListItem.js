@@ -1,11 +1,13 @@
 import styles from '../styles/ListItem.module.css'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useSWRConfig } from 'swr'
 import { API_ENDPOINTS } from '../utils/routes'
 import categories from '../utils/categories'
 import { PacmanLoader } from 'react-spinners'
 import { GridLoader } from 'react-spinners'
+import EditModal from './EditModal'
+import Modal from 'react-modal'
 
 function ListItem(props) {
   const { mutate } = useSWRConfig()
@@ -13,10 +15,7 @@ function ListItem(props) {
   const [deleting, setDeleting] = useState(false)
   const [checkboxLoading, setCheckboxLoading] = useState(false)
   const [checkboxChecked, setCheckboxChecked] = useState(props.completed)
-
-  useEffect(() => {
-    setExpanded(false) // Reset expanded to false when title changes during sort
-  }, [props.title])
+  const [showEditModal, setShowEditModal] = useState(false) // New state variable for the edit modal
 
   const handleExpand = () => {
     setExpanded(!expanded)
@@ -68,6 +67,14 @@ function ListItem(props) {
     setCheckboxChecked(!checkboxChecked)
   }
 
+  const handleOpenEditModal = () => {
+    setShowEditModal(true)
+  }
+
+  const handleCloseEditModal = () => {
+    setShowEditModal(false)
+  }
+
   return (
     <motion.div
       animate={{
@@ -83,7 +90,8 @@ function ListItem(props) {
     >
       <div className={`${styles.itemContainer} ${categoryColor}`}>
         <div className={styles.unexpandedContainer} onClick={handleExpand}>
-          {checkboxLoading ? ( // Render spinner when checkboxLoading is true
+          {checkboxLoading ? (
+            // Render spinner when checkboxLoading is true
             <div className={styles.checkboxSpinner}>
               <GridLoader size={2} color="blue" />
             </div>
@@ -124,7 +132,10 @@ function ListItem(props) {
                   </div>
                 ) : (
                   <div>
-                    <i className={`${styles.editIcon} fa fa-edit`}></i>
+                    <i
+                      className={`${styles.editIcon} fa fa-edit`}
+                      onClick={handleOpenEditModal}
+                    />
                     <i
                       className={`${styles.trashIcon} fa fa-trash`}
                       onClick={() =>
@@ -144,6 +155,33 @@ function ListItem(props) {
           </div>
         )}
       </div>
+      <Modal
+        isOpen={showEditModal}
+        onRequestClose={handleCloseEditModal}
+        contentLabel="Edit Todo"
+        transparent={true}
+        style={{
+          content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            transform: 'translate(-50%, -50%)',
+          },
+        }}
+      >
+        <EditModal
+          closeModal={handleCloseEditModal}
+          listURL={props.listURL}
+          todoID={props.todoid}
+          title={props.title}
+          description={props.description}
+          minutes={props.duration.match(/\d+/g)[1]}
+          hours={props.duration.match(/\d+/g)[0]}
+          labelID={props.labelID}
+          date={date}
+        />
+      </Modal>
     </motion.div>
   )
 }

@@ -123,6 +123,7 @@ export default function List({
               description={item.description}
               category={item.label.category}
               label={item.label.name}
+              labelID={item.label.id}
               date={item.date}
               overdue={new Date(item.date) < currentDate && !item.completed}
               listURL={listURL}
