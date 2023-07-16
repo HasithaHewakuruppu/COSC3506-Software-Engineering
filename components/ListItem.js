@@ -124,7 +124,12 @@ function ListItem(props) {
                   </div>
                 ) : (
                   <div>
-                    <i className={`${styles.editIcon} fa fa-edit`}></i>
+                    <i className={`${styles.editIcon} fa fa-edit`}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      props.startEditingItem()
+                    }}
+                    ></i>
                     <i
                       className={`${styles.trashIcon} fa fa-trash`}
                       onClick={() =>
@@ -162,5 +167,26 @@ async function deleteTodo(todoid, mutate, listURL, setDeleting, setExpanded) {
   setDeleting(false)
   setExpanded(false)
 }
+
+async function editTodo(todoId, updatedTodo) {
+  try {
+    const response = await fetch(`/api/todos/${todoId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedTodo),
+    })
+
+    if (response.ok) {
+      console.log('Successfully updated todo')
+    } else {
+      console.log('Failed to update todo')
+    }
+  } catch (error) {
+    console.log('Error occurred while updating todo:', error)
+  }
+}
+
 
 export default ListItem

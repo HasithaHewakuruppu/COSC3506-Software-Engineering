@@ -11,6 +11,7 @@ import { randomId } from '../utils/randomId'
 import ListItem from './ListItem'
 import Spinner from './Spinner'
 import { AnimatePresence, motion } from 'framer-motion'
+import EditItemForm from './EditItemForm'
 
 export default function List({
   todos,
@@ -18,14 +19,26 @@ export default function List({
   listURL,
   setSortType,
 }) {
+  const [editingItem, setEditingItem] = useState(null)
   const [isOverdueBannerDismissed, setIsOverdueBannerDismissed] =
     useState(false)
   const [isOverdueBannerDisplayed, setIsOverdueBannerDisplayed] =
     useState(false)
+  const [isEditingItem, setIsEditingItem] = useState(false)
   const currentDate = new Date()
   currentDate.setHours(0, 0, 0, 0)
 
   let listDate = null
+
+  const startEditingItem = (id) => {
+    setEditingItem(id);
+    setIsEditingItem(true);
+  };
+
+  const stopEditingItem = () => {
+    setEditingItem(null);
+    setIsEditingItem(false);
+  };
 
   if (listURL) {
     const dateIndex = listURL.indexOf('date=')
@@ -107,6 +120,12 @@ export default function List({
           />
         )}
       </AnimatePresence>
+      {isEditingItem && (
+        <EditItemForm
+          stopEditingItem={stopEditingItem}
+          itemId={editingItem}
+        />
+      )}
       <div
         className={
           isOverdueBannerDisplayed
@@ -128,6 +147,7 @@ export default function List({
               overdue={new Date(item.date) < currentDate && !item.completed}
               listURL={listURL}
               completed={item.completed}
+              startEditingItem={() => startEditingItem(item.id)}
             />
           ))}
       </div>
@@ -140,6 +160,8 @@ function OverdueTodosBanner({
   setIsOverdueBannerDismissed,
   setIsOverdueBannerDisplayed,
 }) {
+  setIsOverdueBannerDisplayed(true)
+
   const countOverdueTodos = todos.filter(
     (t) =>
       isBefore(new Date(t.date), new Date()) &&
@@ -150,8 +172,6 @@ function OverdueTodosBanner({
   if (countOverdueTodos === 0) {
     return null
   }
-
-  setIsOverdueBannerDisplayed(true)
 
   return (
     <motion.div initial={{ opacity: 1 }} exit={{ opacity: 0 }}>
