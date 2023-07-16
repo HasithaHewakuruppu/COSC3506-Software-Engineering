@@ -125,8 +125,9 @@ export default function List({
               category={item.label.category}
               label={item.label.name}
               date={item.date}
-              overdue={new Date(item.date) < currentDate}
+              overdue={new Date(item.date) < currentDate && !item.completed}
               listURL={listURL}
+              completed={item.completed}
             />
           ))}
       </div>
@@ -142,7 +143,8 @@ function OverdueTodosBanner({
   const countOverdueTodos = todos.filter(
     (t) =>
       isBefore(new Date(t.date), new Date()) &&
-      !isSameDay(new Date(t.date), new Date())
+      !isSameDay(new Date(t.date), new Date()) &&
+      !t.completed
   ).length
 
   if (countOverdueTodos === 0) {

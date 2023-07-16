@@ -20,6 +20,7 @@ function getDateFromQuery(dateFromQuery) {
 export default async function todos(req, res) {
   const session = await getServerSession(req, res, authOptions)
   if (!session?.user?.email) {
+    console.log('Get outta here you hacker!!')
     return res.status(401).send('Unauthorized')
   }
 
