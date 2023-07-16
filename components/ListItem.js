@@ -92,7 +92,7 @@ function ListItem(props) {
               type="checkbox"
               className={styles.checkbox}
               defaultChecked={checkboxChecked}
-              onChange={handleCheckboxClick}
+              onClick={handleCheckboxClick}
             />
           )}
           <div className={`${styles.label} ${labelColor}`}>
