@@ -43,11 +43,12 @@ export default function HomePage({ session }) {
       <div className={`${styles.hcustom} container-fluid`}>
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-md-9 col-lg-6 col-xl-5">
-            <h1>Hi Hello, How are you ?</h1>
+            <h1>Welcome to <b>HARMONY HUB!</b></h1>
+            <h3>... are you ready for a more balanced life?</h3>
             <img
               className="img-fluid"
               alt="Sample image"
-              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+              src="https://i.imgur.com/zlN6Qyx.png"
             ></img>
           </div>
           <div className="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
