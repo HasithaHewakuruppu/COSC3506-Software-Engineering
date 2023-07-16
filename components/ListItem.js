@@ -85,7 +85,7 @@ function ListItem(props) {
         <div className={styles.unexpandedContainer} onClick={handleExpand}>
           {checkboxLoading ? ( // Render spinner when checkboxLoading is true
             <div className={styles.checkboxSpinner}>
-              <GridLoader size={3} color="blue" />
+              <GridLoader size={2} color="blue" />
             </div>
           ) : (
             <input

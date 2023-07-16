@@ -7,7 +7,6 @@ import {
 import { CalendarCheck, CalendarDays, Star } from 'lucide-react'
 import { useState } from 'react'
 import styles from '../styles/List.module.css'
-import { randomId } from '../utils/randomId'
 import ListItem from './ListItem'
 import Spinner from './Spinner'
 import { AnimatePresence, motion } from 'framer-motion'

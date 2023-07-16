@@ -29,6 +29,12 @@
 
 .checkbox {
   transform: scale(1.5);
+  margin-right: 5px;
+}
+
+.checkboxSpinner {
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 .listItem {
