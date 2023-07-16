@@ -2,7 +2,7 @@ import styles from '../../styles/DashBoard.module.css'
 import Calendar from '../../components/calendar'
 import { signOut, getSession } from 'next-auth/react'
 import { useState } from 'react'
-import { PulseLoader } from 'react-spinners'
+import { HashLoader } from 'react-spinners'
 import ListPage from './listPage'
 import { prisma } from '../../lib/db'
 import Spinner from '../../components/Spinner'
@@ -77,7 +77,11 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
           </div>
           <div className={`${styles.logoutButton}`}>
             {loggingOut ? (
-              <PulseLoader color="#0d6efd" />
+              <HashLoader
+                size={30}
+                color="#0d6efd"
+                className={styles.logoutAnimation}
+              />
             ) : (
               <>
                 <button
