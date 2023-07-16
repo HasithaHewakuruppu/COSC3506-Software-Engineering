@@ -117,8 +117,8 @@ export default function List({
         {todos &&
           todos.map((item) => (
             <ListItem
-              key={randomId(20)}
-              todoid={item.id} // create prop for id
+              key={item.id}
+              todoid={item.id}
               title={item.title}
               duration={formatDuration(item.duration)}
               description={item.description}
