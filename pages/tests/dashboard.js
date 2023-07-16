@@ -13,6 +13,7 @@ import Modal from 'react-modal'
 import AddItemForm from '../../components/AddItemForm'
 import FilterItemForm from '../../components/FilterItemForm'
 import { motion } from 'framer-motion'
+import Link from 'next/link'
 
 Modal.setAppElement('#__next')
 
@@ -84,6 +85,11 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
               />
             ) : (
               <>
+                <Link href="./plot">
+                  <button className={`${styles.button} btn btn-primary`}>
+                    Todo Stats
+                  </button>
+                </Link>
                 <button
                   className={`${styles.button} btn btn-primary`}
                   onClick={openFilterModal}

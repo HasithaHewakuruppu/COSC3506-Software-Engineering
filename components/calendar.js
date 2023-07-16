@@ -24,10 +24,12 @@ export default function Calendar({ closeModal, setListURL }) {
     if (todo) {
       const uniqueDates = [
         ...new Set(
-          todo.map((item) => {
-            const date = new Date(item.date).toLocaleDateString('en-GB')
-            return date
-          })
+          todo
+            .filter((item) => !item.completed) // Filter out completed todos
+            .map((item) => {
+              const date = new Date(item.date).toLocaleDateString('en-GB')
+              return date
+            })
         ),
       ]
       setHighlightedDates(uniqueDates)
