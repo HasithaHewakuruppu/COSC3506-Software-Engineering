@@ -1,7 +1,7 @@
 import useSWR from 'swr'
 import { useState } from 'react'
-import List from '../../components/List'
-import { API_ENDPOINTS } from '../../utils/routes'
+import List from './List'
+import { API_ENDPOINTS } from '../utils/routes'
 
 function ListPage({ listURL }) {
   const [sortType, setSortType] = useState('Date')
