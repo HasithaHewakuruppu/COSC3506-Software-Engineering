@@ -1,5 +1,5 @@
 export const LOGIN_PAGE = '/'
-export const HOME_PAGE = '/tests/dashboard'
+export const HOME_PAGE = '/dashboard'
 export const LABELS_PAGE = '/labels'
 
 export const API_ENDPOINTS = {
