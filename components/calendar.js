@@ -33,7 +33,7 @@ export default function Calendar({ closeModal, setListURL }) {
         ),
       ]
       setHighlightedDates(uniqueDates)
-      console.log(uniqueDates)
+      // console.log(uniqueDates)
     }
   }, [todo])
 

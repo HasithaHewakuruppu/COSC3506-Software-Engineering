@@ -54,7 +54,7 @@ function FilterItemForm({ closeModal, setListURL }) {
       url += `&duration_lte=${(hoursTo * 60 + minutesTo) * 60 * 1000}`
     }
 
-    console.log(url)
+    // console.log(url)
     setListURL(url)
 
     closeModal()
@@ -208,7 +208,7 @@ function FilterItemForm({ closeModal, setListURL }) {
                         checked={labelIds.includes(label.id)}
                         onChange={(e) => {
                           handleLabelChange(label.id, e.target.checked)
-                          console.log(labelIds)
+                          // console.log(labelIds)
                         }}
                       />
                       <label
