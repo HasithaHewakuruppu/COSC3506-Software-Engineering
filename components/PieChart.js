@@ -9,33 +9,28 @@ const Plot = dynamic(
   { ssr: false }
 )
 
-export default function PieChart({ data }) {
-  const width = 400
-  const height = 400
-
-  const getValues = () => Object.values(data)
-  const getLabels = () => Object.keys(data)
-  const getColors = (labels) =>
-    labels.map((label) => {
-      if (label === categories.FITNESS) return FITNESS_COLOR
-      else if (label === categories.WORK) return WORK_COLOR
-      else if (label === categories.LEISURE) return LEISURE_COLOR
-      else return '#0000'
-    })
+export default function PieChart({ data, width }) {
+  const labels = Object.keys(data).sort()
+  const values = labels.map((label) => data[label])
+  const colors = labels.map((label) => {
+    if (label === categories.FITNESS) return FITNESS_COLOR
+    else if (label === categories.WORK) return WORK_COLOR
+    else if (label === categories.LEISURE) return LEISURE_COLOR
+    else return '#0000'
+  })
 
   return (
     <Plot
       data={[
         {
           type: 'pie',
-          values: getValues(),
-          labels: getLabels(),
+          values: values,
+          labels: labels,
+          marker: { colors },
         },
       ]}
       layout={{
         width: width,
-        height: height,
-        colorway: getColors(getLabels()),
       }}
       config={{ responsive: true, displaylogo: false }}
     />
