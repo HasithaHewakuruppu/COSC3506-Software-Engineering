@@ -44,7 +44,11 @@ export default function Balance({ session, doesNotHaveLabelsSetup }) {
   if (error) return <p>Error loading page.</p>
   else if (!data) return <Spinner fullPageSpinner />
 
-  const todoStats = new TodoStats(data).getDurationsByUpperCategory()
+  console.log(data)
+  const todoStatsAll = new TodoStats(data).getDurationsByUpperCategory()
+  const todoStatsCompleted = new TodoStats(
+    data.filter((todo) => todo.completed)
+  ).getDurationsByUpperCategory()
 
   return (
     <>
@@ -75,7 +79,8 @@ export default function Balance({ session, doesNotHaveLabelsSetup }) {
             Your balance
           </h1>
         </div>
-        <PieChart data={todoStats} />
+        <PieChart data={todoStatsAll} title={'Planned'} width={500} />
+        <PieChart data={todoStatsCompleted} title={'Completed'} width={500} />
       </div>
     </>
   )
