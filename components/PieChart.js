@@ -10,8 +10,6 @@ const Plot = dynamic(
 )
 
 export default function PieChart({ data }) {
-  // Example of data you could pass in as prop
-  const title = 'Mmmm pie'
   const width = 400
   const height = 400
 
@@ -35,7 +33,6 @@ export default function PieChart({ data }) {
         },
       ]}
       layout={{
-        title: title,
         width: width,
         height: height,
         colorway: getColors(getLabels()),
