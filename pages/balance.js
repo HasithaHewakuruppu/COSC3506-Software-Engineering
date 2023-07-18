@@ -39,16 +39,12 @@ export default function Balance({ session, doesNotHaveLabelsSetup }) {
     return <Spinner fullPageSpinner />
   }
 
-  const { data, error } = useSWR(
-    API_ENDPOINTS.GET_TODOS_WITH_LABELS,
-    (...args) =>
-      fetcher(...args).then((todos) =>
-        new TodoStats(todos).getDurationsByUpperCategory()
-      )
-  )
+  const { data, error } = useSWR(API_ENDPOINTS.GET_TODOS_WITH_LABELS, fetcher)
 
   if (error) return <p>Error loading page.</p>
-  if (!data) return <Spinner fullPageSpinner />
+  else if (!data) return <Spinner fullPageSpinner />
+
+  const todoStats = new TodoStats(data).getDurationsByUpperCategory()
 
   return (
     <>
@@ -79,7 +75,7 @@ export default function Balance({ session, doesNotHaveLabelsSetup }) {
             Your balance
           </h1>
         </div>
-        <PieChart data={data} />
+        <PieChart data={todoStats} />
       </div>
     </>
   )
