@@ -2,7 +2,6 @@ import styles from '../styles/DashBoard.module.css'
 import Calendar from '../components/calendar'
 import { signOut, getSession } from 'next-auth/react'
 import { useState } from 'react'
-import { HashLoader } from 'react-spinners'
 import ListPage from '../components/ListPage'
 import { prisma } from '../lib/db'
 import Spinner from '../components/Spinner'
@@ -14,6 +13,7 @@ import AddItemForm from '../components/AddItemForm'
 import FilterItemForm from '../components/FilterItemForm'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import NavBarBase from '../components/NavBarBase'
 
 Modal.setAppElement('#__next')
 
@@ -71,54 +71,37 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
 
   return (
     <>
-      <nav className={styles.navbar}>
-        <div className={styles.navbarContent}>
-          <div className={`${styles.heading}`}>
-            <h1>Harmony Hub</h1>
-          </div>
-          <div className={`${styles.logoutButton}`}>
-            {loggingOut ? (
-              <HashLoader
-                size={30}
-                color="#0d6efd"
-                className={styles.logoutAnimation}
-              />
-            ) : (
-              <>
-                <Link href="./plot">
-                  <button className={`${styles.button} btn btn-primary`}>
-                    Todo Stats
-                  </button>
-                </Link>
-                <button
-                  className={`${styles.button} btn btn-primary`}
-                  onClick={openFilterModal}
-                >
-                  Filter
-                </button>
-                <button
-                  className={`${styles.button} btn btn-primary`}
-                  onClick={openCalendarModal}
-                >
-                  Calendar
-                </button>
-                <button
-                  className={`${styles.button} btn btn-primary`}
-                  onClick={openModal}
-                >
-                  Add Task
-                </button>
-                <button
-                  className={`${styles.button} btn btn-primary`}
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
-              </>
-            )}
-          </div>
-        </div>
-      </nav>
+      <NavBarBase loggingOut={loggingOut}>
+        <Link href="./plot">
+          <button className={`${styles.button} btn btn-primary`}>
+            Todo Stats
+          </button>
+        </Link>
+        <button
+          className={`${styles.button} btn btn-primary`}
+          onClick={openFilterModal}
+        >
+          Filter
+        </button>
+        <button
+          className={`${styles.button} btn btn-primary`}
+          onClick={openCalendarModal}
+        >
+          Calendar
+        </button>
+        <button
+          className={`${styles.button} btn btn-primary`}
+          onClick={openModal}
+        >
+          Add Task
+        </button>
+        <button
+          className={`${styles.button} btn btn-primary`}
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+      </NavBarBase>
 
       <div className={styles.container}>
         <ListPage listURL={listURL} />
