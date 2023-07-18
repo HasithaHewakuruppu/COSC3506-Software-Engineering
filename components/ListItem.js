@@ -8,6 +8,7 @@ import { PacmanLoader } from 'react-spinners'
 import { GridLoader } from 'react-spinners'
 import EditModal from './EditModal'
 import Modal from 'react-modal'
+import { getHours, getMinutes } from 'date-fns'
 
 function ListItem(props) {
   const { mutate } = useSWRConfig()
@@ -65,6 +66,18 @@ function ListItem(props) {
     }
     setCheckboxLoading(false)
     setCheckboxChecked(!checkboxChecked)
+  }
+
+  const convertToMinutes = (durationInMiliSeconds) => {
+    const minutes = Math.floor(
+      (durationInMiliSeconds % (60 * 60 * 1000)) / (60 * 1000)
+    )
+    return minutes
+  }
+
+  const convertToHours = (durationInMiliSeconds) => {
+    const hours = Math.floor(durationInMiliSeconds / (60 * 60 * 1000))
+    return hours
   }
 
   const handleOpenEditModal = () => {
@@ -176,8 +189,8 @@ function ListItem(props) {
           todoID={props.todoid}
           title={props.title}
           description={props.description}
-          minutes={props.duration.match(/\d+/g)[1]}
-          hours={props.duration.match(/\d+/g)[0]}
+          minutes={convertToMinutes(props.durationInMiliSeconds)}
+          hours={convertToHours(props.durationInMiliSeconds)}
           labelID={props.labelID}
           date={date}
         />

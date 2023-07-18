@@ -128,6 +128,7 @@ export default function List({
               overdue={new Date(item.date) < currentDate && !item.completed}
               listURL={listURL}
               completed={item.completed}
+              durationInMiliSeconds={item.duration}
             />
           ))}
       </div>
