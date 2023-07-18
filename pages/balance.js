@@ -1,19 +1,19 @@
-import styles from '../styles/Balance.module.css'
-import { signOut, getSession } from 'next-auth/react'
-import { useState } from 'react'
-import { prisma } from '../lib/db'
-import Spinner from '../components/Spinner'
-import { useRouter } from 'next/router'
-import { LABELS_PAGE, LOGIN_PAGE } from '../utils/routes'
-import { useIsClient } from '../hooks/useIsClient'
+import { Star } from 'lucide-react'
+import { getSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import useSWR from 'swr'
 import NavBarBase from '../components/NavBarBase'
 import PieChart from '../components/PieChart'
-import { fetcher } from '../lib/fetcher'
-import { API_ENDPOINTS } from '../utils/routes'
-import useSWR from 'swr'
+import Spinner from '../components/Spinner'
+import Sunburst from '../components/Sunburst'
+import { useIsClient } from '../hooks/useIsClient'
 import TodoStats from '../lib/TodoStats'
-import { Star } from 'lucide-react'
+import { prisma } from '../lib/db'
+import { fetcher } from '../lib/fetcher'
+import styles from '../styles/Balance.module.css'
+import { API_ENDPOINTS, LABELS_PAGE, LOGIN_PAGE } from '../utils/routes'
 
 export default function Balance({ session, doesNotHaveLabelsSetup }) {
   const [loggingOut, setLoggingOut] = useState(false)
@@ -44,11 +44,10 @@ export default function Balance({ session, doesNotHaveLabelsSetup }) {
   if (error) return <p>Error loading page.</p>
   else if (!data) return <Spinner fullPageSpinner />
 
-  console.log(data)
-  const todoStatsAll = new TodoStats(data).getDurationsByUpperCategory()
+  const todoStatsAll = new TodoStats(data)
   const todoStatsCompleted = new TodoStats(
     data.filter((todo) => todo.completed)
-  ).getDurationsByUpperCategory()
+  )
 
   return (
     <>
@@ -65,7 +64,6 @@ export default function Balance({ session, doesNotHaveLabelsSetup }) {
           Logout
         </button>
       </NavBarBase>
-      {}
 
       <div className={styles.container}>
         <div className={styles.headingContainer}>
@@ -79,8 +77,26 @@ export default function Balance({ session, doesNotHaveLabelsSetup }) {
             Your balance
           </h1>
         </div>
-        <PieChart data={todoStatsAll} title={'Planned'} width={500} />
-        <PieChart data={todoStatsCompleted} title={'Completed'} width={500} />
+        <PieChart
+          data={todoStatsAll.getDurationsByUpperCategory()}
+          title={'Planned'}
+          width={500}
+        />
+        <PieChart
+          data={todoStatsCompleted.getDurationsByUpperCategory()}
+          title={'Completed'}
+          width={500}
+        />
+        <Sunburst
+          data={todoStatsAll.getDurationsByCategory()}
+          title={'Planned'}
+          width={500}
+        />
+        <Sunburst
+          data={todoStatsCompleted.getDurationsByCategory()}
+          title={'Completed'}
+          width={500}
+        />
       </div>
     </>
   )
