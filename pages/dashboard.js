@@ -72,9 +72,9 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
   return (
     <>
       <NavBarBase loggingOut={loggingOut}>
-        <Link href="./plot">
+        <Link href="./balance">
           <button className={`${styles.button} btn btn-primary`}>
-            Todo Stats
+            Balance
           </button>
         </Link>
         <button
