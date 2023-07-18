@@ -9,7 +9,7 @@ const Plot = dynamic(
   { ssr: false }
 )
 
-export default function PieChart({ data, width }) {
+export default function PieChart({ data, title, width }) {
   const labels = Object.keys(data).sort()
   const values = labels.map((label) => data[label])
   const colors = labels.map((label) => {
@@ -25,12 +25,16 @@ export default function PieChart({ data, width }) {
         {
           type: 'pie',
           values: values,
-          labels: labels,
+          labels: labels.map(
+            (label) =>
+              label.charAt(0).toUpperCase() + label.slice(1).toLowerCase()
+          ),
           marker: { colors },
         },
       ]}
       layout={{
-        width: width,
+        title,
+        width,
       }}
       config={{ responsive: true, displaylogo: false }}
     />
