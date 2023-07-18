@@ -1,4 +1,4 @@
-import styles from '../styles/DashBoard.module.css'
+import styles from '../styles/Balance.module.css'
 import { signOut, getSession } from 'next-auth/react'
 import { useState } from 'react'
 import { prisma } from '../lib/db'
@@ -8,8 +8,14 @@ import { LABELS_PAGE, LOGIN_PAGE } from '../utils/routes'
 import { useIsClient } from '../hooks/useIsClient'
 import Link from 'next/link'
 import NavBarBase from '../components/NavBarBase'
+import PieChart from '../components/PieChart'
+import { fetcher } from '../lib/fetcher'
+import { API_ENDPOINTS } from '../utils/routes'
+import useSWR from 'swr'
+import TodoStats from '../lib/TodoStats'
+import { Star } from 'lucide-react'
 
-export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
+export default function Balance({ session, doesNotHaveLabelsSetup }) {
   const [loggingOut, setLoggingOut] = useState(false)
 
   const router = useRouter()
@@ -33,6 +39,17 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
     return <Spinner fullPageSpinner />
   }
 
+  const { data, error } = useSWR(
+    API_ENDPOINTS.GET_TODOS_WITH_LABELS,
+    (...args) =>
+      fetcher(...args).then((todos) =>
+        new TodoStats(todos).getDurationsByUpperCategory()
+      )
+  )
+
+  if (error) return <p>Error loading page.</p>
+  if (!data) return <Spinner fullPageSpinner />
+
   return (
     <>
       <NavBarBase loggingOut={loggingOut}>
@@ -48,9 +65,21 @@ export default function Dashboard({ session, doesNotHaveLabelsSetup }) {
           Logout
         </button>
       </NavBarBase>
+      {}
 
       <div className={styles.container}>
-        <p>Balance page placeholder</p>
+        <div className={styles.headingContainer}>
+          <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
+          <h1
+            style={{
+              fontSize: '1.8rem',
+              margin: 0,
+            }}
+          >
+            Your balance
+          </h1>
+        </div>
+        <PieChart data={data} />
       </div>
     </>
   )
