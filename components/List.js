@@ -10,6 +10,7 @@ import styles from '../styles/List.module.css'
 import ListItem from './ListItem'
 import Spinner from './Spinner'
 import { AnimatePresence, motion } from 'framer-motion'
+import { BookmarkCheckFill } from 'react-bootstrap-icons'
 
 export default function List({
   todos,
@@ -193,7 +194,7 @@ function ListHeader({ isToday, listDate, listURL }) {
   } else if (!listURL) {
     return (
       <>
-        <Star size={40} strokeWidth={0.75} fill="#fef9c3" />
+        <BookmarkCheckFill size={40} color="#2d646a" />
         <h1
           style={{
             fontSize: '1.8rem',

@@ -1,6 +1,6 @@
 .itemContainer {
-  background-color: #f2f2f2;
-  border: 1px solid #ccc;
+  background-color: #f1f2e9;
+  border: 1px solid #cddcc2;
   padding: 10px;
   margin: 10px;
   border-left: 8px solid;
@@ -53,10 +53,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 12ch;
+  width: 8ch;
   margin-left: 10px;
-  border-radius: 10px;
-  border: 1px solid black;
+  border-radius: 20px;
+  
 }
 
 .pEdit {
@@ -72,15 +72,24 @@
 }
 
 .labelLeisure {
-  background-color: #fde68a;
+  background-color: #fbb223;
+  color: #ffffff; /* sets the text color to white */
+  font-weight: bold; /* makes the text bold */
+  box-shadow: 2px 2px 3px rgba(251,178,35,0.5); /* adds a subtle drop shadow */
 }
 
 .labelWork {
-  background-color: #bfdbfe;
+  background-color: #43bf9e;
+  color: #ffffff; /* sets the text color to white */
+  font-weight: bold; /* makes the text bold */
+  box-shadow: 2px 2px 3px rgba(67,191,158,0.5); /* adds a subtle drop shadow */
 }
 
 .labelFitness {
-  background-color: #bbf7d0;
+  background-color: #adc233;
+  color: #ffffff; /* sets the text color to white */
+  font-weight: bold; /* makes the text bold */
+  box-shadow: 2px 2px 3px rgba(173,194,51,0.5); /* adds a subtle drop shadow */
 }
 
 .labelNone {
@@ -88,15 +97,15 @@
 }
 
 .categoryLeisure {
-  border-left-color: #fde68a;
+  border-left-color: #fbb223;
 }
 
 .categoryWork {
-  border-left-color: #bfdbfe;
+  border-left-color: #43bf9e;
 }
 
 .categoryFitness {
-  border-left-color: #bbf7d0;
+  border-left-color: #adc233;
 }
 
 .categoryNone {
@@ -120,7 +129,7 @@
 }
 
 .overdueDate {
-  color: red;
+  color: #e05245;
   font-weight: bold;
 }
 
@@ -131,3 +140,8 @@
 .deleting {
   margin-right: 30px;
 }
+
+.checkbox:checked {
+  filter: hue-rotate(180deg); /* Adjust the hue rotation to change the color */
+}
+

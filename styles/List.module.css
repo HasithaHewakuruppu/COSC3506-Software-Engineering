@@ -44,7 +44,7 @@
 }
 
 .overdueTodosBannerWrapepr {
-  background: #fecaca;
+  background: #f29b83;
   border-radius: 4px;
   margin: 10px;
   padding: 0 10px;
@@ -54,7 +54,7 @@
 }
 
 .overdueTodosTitle {
-  color: #57534e;
+  color: #6e2300;
   font-weight: 400;
   font-size: 1rem;
   margin: 0;
@@ -64,7 +64,7 @@
 }
 
 .overdueTodosOkButton {
-  background: #ef4444;
+  background: #c4431c;
   margin: 10px;
   color: white;
   border: none;

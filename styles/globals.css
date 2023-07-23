@@ -60,3 +60,16 @@ tbody td:active {
   -ms-transform: scale(0.7);
   transform: scale(0.7);
 }
+
+/* styles/globals.css */
+:root {
+  --bs-primary: #ffb03b; /* new primary color in hexadecimal */
+  --bs-primary-rgb: 255,175,60; /* new primary color in RGB */
+}
+
+.btn-primary {
+  --bs-btn-bg: #25a694;
+  --bs-btn-border-color: #2b676f;
+  --bs-body-color: #2b676f;
+}
+

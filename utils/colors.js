@@ -1,8 +1,8 @@
 import categories from './categories'
 
-export const LEISURE_COLOR = '#fde68a'
-export const WORK_COLOR = '#bfdbfe'
-export const FITNESS_COLOR = '#bbf7d0'
+export const LEISURE_COLOR = '#51b896'
+export const WORK_COLOR = '#e47755'
+export const FITNESS_COLOR = '#a6bb3b'
 
 export function colorOfCategory(category) {
   if (category === categories.FITNESS) return FITNESS_COLOR
