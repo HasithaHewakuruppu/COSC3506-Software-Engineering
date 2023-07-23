@@ -1,6 +1,6 @@
 .navbar {
   height: 60px;
-  background-color: #55acee;
+  background-color: #f7a83f;
 }
 
 .container {
@@ -32,4 +32,8 @@
 
 .logoutAnimation {
   margin-right: 15px;
+}
+
+.textShadow {
+  text-shadow: 2px 2px 6.5px rgba(204, 70, 8, 0.5);
 }

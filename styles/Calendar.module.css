@@ -19,7 +19,7 @@
 .wrap-header {
   position: relative;
   width: 45%;
-  background: #0a5cb5;
+  background: #ffb03b;
 }
 @media (max-width: 767.98px) {
   .wrap-header {
@@ -92,7 +92,7 @@
   color: #fff;
 }
 .toDo:after {
-  background: #0a5cb5;
+  background: #ffb03b;
 }
 
 .disabled {

@@ -30,7 +30,7 @@
   margin-left: 0.2rem;
   margin-right: 0.2;
   white-space: nowrap;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
 }
 
 .noUnderline {
@@ -42,7 +42,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #0d6efd;
+  color: #e66b45;
   font-weight: bolder;
 }
 
@@ -51,34 +51,39 @@
 }
 
 .google {
-  background-color: #55acee;
+  background-color: #57b08c;
 }
 
 .google:hover,
 .google:focus,
 .google:active {
-  background-color: #3d8ec9; /* Darker hover/focus/active color */
+  background-color: #e66b45; /* Darker hover/focus/active color */
   /* Add any other styles you want for the hover/focus/active state */
 }
 
 .github {
-  background-color: #0d6efd;
+  background-color: #459176;
 }
 
 .github:hover,
 .github:focus,
 .github:active {
-  background-color: #0a5cb5; /* Darker hover/focus/active color */
+  background-color: #e66b45; /* Darker hover/focus/active color */
   /* Add any other styles you want for the hover/focus/active state */
 }
 
 .discord {
-  background-color: #3b5998;
+  background-color: #315b60;
 }
 
 .discord:hover,
 .discord:focus,
 .discord:active {
-  background-color: #304675; /* Darker hover/focus/active color */
+  background-color: #e66b45; /* Darker hover/focus/active color */
   /* Add any other styles you want for the hover/focus/active state */
 }
+
+.centerText {
+  text-align: center;
+}
+

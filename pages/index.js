@@ -43,8 +43,8 @@ export default function HomePage({ session }) {
       <div className={`${styles.hcustom} container-fluid`}>
         <div className="row d-flex justify-content-center align-items-center h-100">
           <div className="col-md-9 col-lg-6 col-xl-5">
-            <h1>Welcome to <b>HARMONY HUB!</b></h1>
-            <h3>... are you ready for a more balanced life?</h3>
+            <h1 className={styles.centerText}>Welcome to <b>HARMONY</b> hub!</h1>
+            <h4 className={styles.centerText}>... are you ready for a more balanced life?</h4>
             <img
               className="img-fluid"
               alt="Sample image"
@@ -60,7 +60,7 @@ export default function HomePage({ session }) {
               <div
                 className={`${styles.divider} d-flex align-items-center my-4 `}
               >
-                <p className="text-center fw-bold mx-3 mb-0 ">with</p>
+                <p className="text-center fw-regular mx-3 mb-0 ">with</p>
               </div>
 
               <button
