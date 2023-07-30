@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "dotenv -e .env.local -- node ./utils/env.mjs && next dev",
-    "build": "next build",
+    "build": "npx prisma generate && next build",
     "start": "next start",
     "studio": "dotenv -e .env.local -- npx prisma studio",
     "push": "dotenv -e .env.local -- npx prisma db push",
