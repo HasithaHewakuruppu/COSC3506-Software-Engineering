@@ -33,7 +33,7 @@ function FilterItemForm({ closeModal, setListURL }) {
     // console.log('&duration_gte' + (hoursFrom * 60 + minutesFrom) * 60 * 1000)
     // console.log('&duration_lte' + (hoursTo * 60 + minutesTo) * 60 * 1000)
 
-    const baseURL = 'http://localhost:3000/api/todos'
+    const baseURL = API_ENDPOINTS.GET_TODOS
     let url = `${baseURL}?labels=true`
 
     if (selectedDateFrom) {
