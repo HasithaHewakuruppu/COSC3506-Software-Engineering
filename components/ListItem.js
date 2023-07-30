@@ -8,7 +8,6 @@ import { PacmanLoader } from 'react-spinners'
 import { GridLoader } from 'react-spinners'
 import EditModal from './EditModal'
 import Modal from 'react-modal'
-import { getHours, getMinutes } from 'date-fns'
 
 function ListItem(props) {
   const { mutate } = useSWRConfig()

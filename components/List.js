@@ -4,7 +4,7 @@ import {
   isSameDay,
   isToday as isTodayDateFns,
 } from 'date-fns'
-import { CalendarCheck, CalendarDays, Star } from 'lucide-react'
+import { CalendarCheck, CalendarDays } from 'lucide-react'
 import { useState } from 'react'
 import styles from '../styles/List.module.css'
 import ListItem from './ListItem'
